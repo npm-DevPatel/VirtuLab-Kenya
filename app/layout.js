@@ -1,3 +1,4 @@
+import { AuthProvider } from '@/components/AuthProvider';
 import './globals.css';
 
 export const metadata = {
@@ -18,7 +19,9 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

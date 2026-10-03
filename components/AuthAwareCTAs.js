@@ -1,23 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { useAuth } from '@/components/AuthProvider';
 
 export function HeroCtas({ className, btnPrimaryClass, btnSecondaryClass }) {
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setLoggedIn(!!user);
-    });
-    return () => unsubscribe();
-  }, []);
+  const { user, loading } = useAuth();
+  const loggedIn = !!user;
 
   return (
     <div className={className}>
-      {loggedIn ? (
+      {loading ? (
+        <span>Loading...</span>
+      ) : loggedIn ? (
         <Link href="/experiments" className={btnPrimaryClass}>Go to Dashboard</Link>
       ) : (
         <>
@@ -30,16 +24,10 @@ export function HeroCtas({ className, btnPrimaryClass, btnSecondaryClass }) {
 }
 
 export function CtaStrip({ sectionClass, containerClass, headingClass, subClass, btnClass }) {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { user, loading } = useAuth();
+  const loggedIn = !!user;
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setLoggedIn(!!user);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  if (loggedIn) return null;
+  if (loading || loggedIn) return null;
 
   return (
     <section className={sectionClass} aria-label="Sign up call to action">
@@ -51,5 +39,25 @@ export function CtaStrip({ sectionClass, containerClass, headingClass, subClass,
         <Link href="/signup" className={btnClass}>Create Your Account</Link>
       </div>
     </section>
+  );
+}
+
+export function FooterAuthLinks({ footerLinkClass }) {
+  const { user, loading } = useAuth();
+  const loggedIn = !!user;
+
+  if (loading) return null;
+
+  if (loggedIn) {
+    return (
+      <Link href="/experiments" className={footerLinkClass}>My Experiments</Link>
+    );
+  }
+
+  return (
+    <>
+      <Link href="/login" className={footerLinkClass}>Log in</Link>
+      <Link href="/signup" className={footerLinkClass}>Sign up</Link>
+    </>
   );
 }

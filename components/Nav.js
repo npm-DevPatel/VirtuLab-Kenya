@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { useAuth } from '@/components/AuthProvider';
 import styles from './Nav.module.css';
 
 /**
@@ -12,14 +13,8 @@ import styles from './Nav.module.css';
 export default function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setLoggedIn(!!user);
-    });
-    return () => unsubscribe();
-  }, []);
+  const { user, loading } = useAuth();
+  const loggedIn = !!user;
 
   const handleLogout = async () => {
     try {
@@ -52,7 +47,9 @@ export default function SiteNav() {
 
         {/* Auth area - desktop */}
         <div className={styles.auth}>
-          {loggedIn ? (
+          {loading ? (
+             <span className={styles.navLink}>Loading...</span>
+          ) : loggedIn ? (
             <>
               <Link href="/experiments" className="btn btn-primary">My Experiments</Link>
               <button onClick={handleLogout} className={styles.navLink} style={{background: 'none', border: 'none', cursor: 'pointer', padding: 0}}>Sign out</button>
@@ -84,10 +81,12 @@ export default function SiteNav() {
           <Link href="/experiments" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Experiments</Link>
           <Link href="/#how-it-works" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>How it works</Link>
           <hr className="divider" />
-          {loggedIn ? (
+          {loading ? (
+            <span className={styles.mobileLink}>Loading...</span>
+          ) : loggedIn ? (
             <>
-              <Link href="/experiments" className={`btn btn-primary ${styles.mobileAuthBtn}`}>My Experiments</Link>
-              <button onClick={handleLogout} className={styles.mobileLink} style={{background: 'none', border: 'none', cursor: 'pointer', padding: 'var(--sp-2) 0', textAlign: 'left', width: 'fit-content'}}>Sign out</button>
+              <Link href="/experiments" className={`btn btn-primary ${styles.mobileAuthBtn}`} onClick={() => setMenuOpen(false)}>My Experiments</Link>
+              <button onClick={() => { handleLogout(); setMenuOpen(false); }} className={styles.mobileLink} style={{background: 'none', border: 'none', cursor: 'pointer', padding: 'var(--sp-2) 0', textAlign: 'left', width: 'fit-content'}}>Sign out</button>
             </>
           ) : (
             <>

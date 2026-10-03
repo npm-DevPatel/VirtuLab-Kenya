@@ -2,7 +2,7 @@ import Link from 'next/link';
 import SiteNav from '@/components/Nav';
 import { HeroIllustration, ChemistryIcon, PhysicsIcon, BiologyIcon } from '@/components/Illustrations';
 import { getBySubject } from '@/lib/experiments';
-import { HeroCtas, CtaStrip } from '@/components/AuthAwareCTAs';
+import { HeroCtas, CtaStrip, FooterAuthLinks } from '@/components/AuthAwareCTAs';
 import styles from './home.module.css';
 
 export const metadata = {
@@ -178,8 +178,7 @@ export default function HomePage() {
           </div>
           <nav className={styles.footerLinks} aria-label="Footer navigation">
             <Link href="/experiments" className={styles.footerLink}>Experiments</Link>
-            <Link href="/login" className={styles.footerLink}>Log in</Link>
-            <Link href="/signup" className={styles.footerLink}>Sign up</Link>
+            <FooterAuthLinks footerLinkClass={styles.footerLink} />
           </nav>
         </div>
         <div className={`container ${styles.footerBottom}`}>
