@@ -1,0 +1,120 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--paper);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.navScrolled {
+  border-bottom-color: var(--border);
+  box-shadow: var(--nav-shadow);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+  height: 60px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  text-decoration: none;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.logo:hover { color: var(--accent); }
+
+.logoText {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Desktop nav links */
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  flex: 1;
+}
+
+.navLink {
+  font-size: var(--text-body);
+  font-weight: 400;
+  color: var(--ink-muted);
+  text-decoration: none;
+  transition: color var(--t-fast);
+}
+.navLink:hover { color: var(--accent); }
+
+/* Auth area */
+.auth {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  flex-shrink: 0;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--sp-2);
+  margin-left: auto;
+}
+
+.bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--ink);
+  border-radius: 1px;
+  transition: transform var(--t-fast), opacity var(--t-fast);
+}
+
+.barOpen1 { transform: translateY(7px) rotate(45deg); }
+.barOpen2 { opacity: 0; }
+.barOpen3 { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu */
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  gap: var(--sp-1);
+  background-color: var(--paper);
+  border-top: 1px solid var(--border);
+  padding: var(--sp-4) var(--sp-4) var(--sp-6);
+}
+
+.mobileLink {
+  font-size: var(--text-body);
+  color: var(--ink-muted);
+  text-decoration: none;
+  padding: var(--sp-2) 0;
+  transition: color var(--t-fast);
+}
+.mobileLink:hover { color: var(--accent); }
+
+.mobileAuthBtn {
+  margin-top: var(--sp-3);
+  width: fit-content;
+}
+
+@media (max-width: 768px) {
+  .links { display: none; }
+  .auth  { display: none; }
+  .hamburger { display: flex; }
+  .mobileMenu { display: flex; }
+}

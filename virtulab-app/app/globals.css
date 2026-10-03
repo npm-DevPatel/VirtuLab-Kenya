@@ -1,0 +1,333 @@
+/* ============================================================
+   VirtuLab Kenya — Global Design System
+   Fonts: Fraunces (headings), IBM Plex Sans (body/UI),
+          IBM Plex Mono (data/numbers)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+/* ── Color tokens ──────────────────────────────────────────── */
+:root {
+  /* Base — warm paper neutrals */
+  --paper:        #FAF7F0;
+  --paper-dim:    #F0EBE0;
+  --ink:          #1E1B16;
+  --ink-muted:    #5C564B;
+
+  /* Accent — deep lab-glass green */
+  --accent:       #1F6E4F;
+  --accent-dim:   #163F30;
+  --accent-tint:  #E4EEE7;
+
+  /* Subject colors — small tags/markers only */
+  --chemistry:    #B4452A;
+  --physics:      #2A5B8C;
+  --biology:      #5B7A3A;
+
+  /* Status */
+  --error:        #A3362A;
+  --success:      var(--accent);
+
+  /* Borders */
+  --border:       rgba(30, 27, 22, 0.10);
+  --border-form:  rgba(30, 27, 22, 0.20);
+
+  /* Nav shadow (scroll only) */
+  --nav-shadow:   0 1px 4px rgba(30, 27, 22, 0.10);
+
+  /* ── Spacing scale ─────────────────────────────────────── */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-24: 96px;
+
+  /* ── Border radius ─────────────────────────────────────── */
+  --r-sm:  4px;   /* buttons, inputs, tags */
+  --r-lg:  0px;   /* cards, containers */
+
+  /* ── Type scale ────────────────────────────────────────── */
+  --text-display: 56px;
+  --text-h1:      40px;
+  --text-h2:      28px;
+  --text-h3:      20px;
+  --text-body:    17px;
+  --text-small:   14px;
+  --text-mono:    15px;
+
+  --lh-display: 1.08;
+  --lh-h1:      1.15;
+  --lh-h2:      1.20;
+  --lh-h3:      1.30;
+  --lh-body:    1.60;
+  --lh-small:   1.50;
+  --lh-mono:    1.40;
+
+  /* ── Transition ────────────────────────────────────────── */
+  --t-fast: 120ms ease;
+}
+
+/* ── Reset & base ──────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background-color: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography ────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.display {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: var(--text-display);
+  line-height: var(--lh-display);
+  font-weight: 500;
+}
+
+h1 { font-size: var(--text-h1); line-height: var(--lh-h1); }
+h2 { font-size: var(--text-h2); line-height: var(--lh-h2); }
+h3 { font-size: var(--text-h3); line-height: var(--lh-h3); }
+
+p, li {
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+}
+
+.text-muted {
+  color: var(--ink-muted);
+}
+
+.text-small {
+  font-size: var(--text-small);
+  line-height: var(--lh-small);
+}
+
+.mono {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: var(--text-mono);
+  line-height: var(--lh-mono);
+}
+
+.mono-small {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: var(--text-small);
+  line-height: var(--lh-small);
+  letter-spacing: 0.04em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--t-fast);
+}
+a:hover { color: var(--accent-dim); }
+
+/* ── Buttons ───────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: var(--text-body);
+  font-weight: 500;
+  border-radius: var(--r-sm);
+  padding: 10px var(--sp-6);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.btn-primary {
+  background-color: var(--accent);
+  color: var(--paper);
+}
+.btn-primary:hover { background-color: var(--accent-dim); color: var(--paper); }
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+}
+.btn-secondary:hover {
+  background-color: rgba(30, 27, 22, 0.06);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Layout utility ────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--sp-8);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* ── Subject tag ───────────────────────────────────────────── */
+.subject-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  padding: 3px var(--sp-2);
+  border-radius: var(--r-sm);
+}
+
+.subject-tag--chemistry { color: var(--chemistry); border-left: 3px solid var(--chemistry); padding-left: 6px; }
+.subject-tag--physics   { color: var(--physics);   border-left: 3px solid var(--physics);   padding-left: 6px; }
+.subject-tag--biology   { color: var(--biology);   border-left: 3px solid var(--biology);   padding-left: 6px; }
+
+/* ── Form elements ─────────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.form-label {
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.form-input,
+.form-select {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: var(--text-body);
+  color: var(--ink);
+  background-color: var(--paper);
+  border: 1px solid var(--border-form);
+  border-radius: var(--r-sm);
+  padding: 10px var(--sp-3);
+  width: 100%;
+  outline: none;
+  transition: border-color var(--t-fast);
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--accent);
+}
+
+.form-input.error,
+.form-select.error {
+  border-color: var(--error);
+}
+
+.form-error {
+  font-size: var(--text-small);
+  color: var(--error);
+  line-height: var(--lh-small);
+}
+
+/* ── Experiment card ───────────────────────────────────────── */
+.experiment-card {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background-color: var(--paper);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--t-fast);
+}
+
+.experiment-card:hover {
+  border-color: rgba(30, 27, 22, 0.22);
+  color: inherit;
+}
+
+.experiment-card__title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: var(--text-h3);
+  line-height: var(--lh-h3);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.experiment-card__desc {
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink-muted);
+  flex: 1;
+}
+
+.experiment-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  margin-top: var(--sp-1);
+}
+
+/* ── Breadcrumb ────────────────────────────────────────────── */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-small);
+  color: var(--ink-muted);
+  flex-wrap: wrap;
+}
+.breadcrumb a { color: var(--ink-muted); }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb__sep { color: var(--border-form); }
+.breadcrumb__current { color: var(--ink); }
+
+/* ── Mobile responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --text-display: 36px;
+    --text-h1:      30px;
+    --text-h2:      24px;
+    --text-h3:      18px;
+  }
+
+  .container {
+    padding: 0 var(--sp-4);
+  }
+}

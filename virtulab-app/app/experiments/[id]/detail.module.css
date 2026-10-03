@@ -1,0 +1,127 @@
+.page {
+  min-height: calc(100vh - 60px);
+  background-color: var(--paper);
+  padding-bottom: var(--sp-24);
+}
+
+.page .container {
+  max-width: 780px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  padding: var(--sp-8) 0 var(--sp-6);
+}
+
+/* Header */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-8);
+}
+
+.title {
+  font-size: var(--text-h1);
+  line-height: var(--lh-h1);
+  color: var(--ink);
+  max-width: 20ch;
+}
+
+.description {
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink-muted);
+  max-width: 60ch;
+}
+
+/* Status block */
+.statusBlock {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  background-color: var(--accent-tint);
+  padding: var(--sp-6);
+  margin-bottom: var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.statusLabel {
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.statusHeading {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: var(--text-h3);
+  line-height: var(--lh-h3);
+  font-weight: 500;
+  color: var(--accent-dim);
+}
+
+.statusText {
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink-muted);
+  max-width: 56ch;
+}
+
+/* Procedure section */
+.procedureSection {
+  margin-bottom: var(--sp-12);
+}
+
+.procedureHeading {
+  font-size: var(--text-h2);
+  line-height: var(--lh-h2);
+  color: var(--accent-dim);
+  margin-bottom: var(--sp-3);
+}
+
+.procedureSub {
+  font-size: var(--text-body);
+  margin-bottom: var(--sp-8);
+}
+
+.procedureList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.procedureStep {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-6);
+  padding: var(--sp-6) 0;
+  border-bottom: 1px solid var(--border);
+}
+.procedureStep:last-child { border-bottom: none; }
+
+.stepNum {
+  font-size: 13px;
+  color: var(--accent);
+  flex-shrink: 0;
+  min-width: 24px;
+}
+
+.stepText {
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+}
+
+/* Back button row */
+.backRow {
+  margin-top: var(--sp-8);
+  padding-top: var(--sp-8);
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .title {
+    max-width: none;
+  }
+}
