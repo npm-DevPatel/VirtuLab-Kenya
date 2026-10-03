@@ -2,11 +2,11 @@ import './globals.css';
 
 export const metadata = {
   title: {
-    default: 'VirtuLab Kenya — Virtual Science Practicals for Secondary Schools',
+    default: 'VirtuLab Kenya - Virtual Science Practicals for Secondary Schools',
     template: '%s | VirtuLab Kenya',
   },
   description:
-    'Free, browser-based virtual science practicals for Kenyan secondary school students. KCSE-aligned experiments in Chemistry, Physics and Biology — no lab equipment needed.',
+    'Free, browser-based virtual science practicals for Kenyan secondary school students. KCSE-aligned experiments in Chemistry, Physics and Biology - no lab equipment needed.',
   keywords: ['KCSE', 'virtual lab', 'chemistry', 'physics', 'biology', 'Kenya', 'secondary school'],
 };
 

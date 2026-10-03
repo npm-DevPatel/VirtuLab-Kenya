@@ -73,7 +73,7 @@
 .subjectHeadingPhysics   { color: var(--physics); }
 .subjectHeadingBiology   { color: var(--biology); }
 
-/* Card grid — 4 columns desktop, 2 tablet, 1 mobile */
+/* Card grid - 4 columns desktop, 2 tablet, 1 mobile */
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

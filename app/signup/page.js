@@ -42,7 +42,7 @@ function firebaseErrorMessage(code) {
     case 'auth/weak-password':
       return 'Password must be at least 8 characters.';
     case 'auth/network-request-failed':
-      return 'Network error — check your connection and try again.';
+      return 'Network error - check your connection and try again.';
     case 'auth/too-many-requests':
       return 'Too many attempts. Wait a moment before trying again.';
     default:
@@ -76,7 +76,7 @@ export default function SignUpPage() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // 1 — Client-side validation
+    // 1 - Client-side validation
     const errs = validate(fields);
     if (Object.keys(errs).length > 0) {
       setErrors(errs);
@@ -87,19 +87,19 @@ export default function SignUpPage() {
     setFormError('');
 
     try {
-      // 2 — Create the Firebase account
+      // 2 - Create the Firebase account
       const credential = await createUserWithEmailAndPassword(
         auth,
         fields.email.trim(),
         fields.password,
       );
 
-      // 3 — Attach the display name (school & role stored for future Supabase/Firestore use)
+      // 3 - Attach the display name (school & role stored for future Supabase/Firestore use)
       await updateProfile(credential.user, {
         displayName: fields.fullName.trim(),
       });
 
-      // 4 — Success
+      // 4 - Success
       setSubmitted(true);
       // Brief pause so the success state is visible, then redirect to catalogue
       setTimeout(() => router.push('/experiments'), 700);
@@ -270,7 +270,7 @@ export default function SignUpPage() {
                   <Spinner /> Creating account…
                 </>
               ) : submitted ? (
-                'Done — redirecting…'
+                'Done - redirecting…'
               ) : (
                 'Create Account'
               )}

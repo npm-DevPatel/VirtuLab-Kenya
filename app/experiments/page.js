@@ -75,7 +75,7 @@ export default function ExperimentsPage() {
                       key={exp.id}
                       href={`/experiments/${exp.id}`}
                       className="experiment-card"
-                      aria-label={`${exp.title} — ${exp.subject}`}
+                      aria-label={`${exp.title} - ${exp.subject}`}
                     >
                       <span className={`subject-tag ${subjectTagClass[exp.subject]} ${styles.cardTag}`}>
                         {exp.subject}

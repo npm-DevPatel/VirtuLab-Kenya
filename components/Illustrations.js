@@ -1,10 +1,10 @@
 /**
  * Lab apparatus line-art SVG illustrations.
- * Single-color, flat, clean line art — ink or subject color.
+ * Single-color, flat, clean line art - ink or subject color.
  * No 3D, no gradients, no gloss.
  */
 
-/** Hero illustration — burette + conical flask titration setup */
+/** Hero illustration - burette + conical flask titration setup */
 export function HeroIllustration({ className = '' }) {
   return (
     <svg
@@ -54,20 +54,20 @@ export function HeroIllustration({ className = '' }) {
       {/* White tile under flask */}
       <rect x="130" y="412" width="108" height="8" rx="1" stroke="#1E1B16" strokeWidth="1.4" fill="#FAF7F0"/>
 
-      {/* Second clamp arm — lower */}
+      {/* Second clamp arm - lower */}
       <rect x="100" y="340" width="55" height="4" rx="2" stroke="#1E1B16" strokeWidth="1.5" fill="#FAF7F0"/>
 
       {/* Bench line */}
       <line x1="20" y1="420" x2="340" y2="420" stroke="#1E1B16" strokeWidth="1" opacity="0.15"/>
 
-      {/* Ammeter (decorative, physics) — off to side */}
+      {/* Ammeter (decorative, physics) - off to side */}
       <circle cx="295" cy="200" r="36" stroke="#2A5B8C" strokeWidth="1.6" fill="rgba(42,91,140,0.04)"/>
       <text x="295" y="196" textAnchor="middle" fontFamily="IBM Plex Mono, monospace" fontSize="11" fill="#2A5B8C" opacity="0.7">A</text>
       <line x1="259" y1="200" x2="245" y2="200" stroke="#2A5B8C" strokeWidth="1.4" strokeLinecap="round"/>
       <line x1="331" y1="200" x2="345" y2="200" stroke="#2A5B8C" strokeWidth="1.4" strokeLinecap="round"/>
       <path d="M275 218 Q295 230 315 218" stroke="#2A5B8C" strokeWidth="1" fill="none" opacity="0.5"/>
 
-      {/* Leaf — biology */}
+      {/* Leaf - biology */}
       <path
         d="M50 280 Q90 230 130 260 Q100 310 50 280 Z"
         stroke="#5B7A3A" strokeWidth="1.6" fill="rgba(91,122,58,0.06)"
@@ -80,7 +80,7 @@ export function HeroIllustration({ className = '' }) {
   );
 }
 
-/** Chemistry section — flask icon */
+/** Chemistry section - flask icon */
 export function ChemistryIcon({ size = 48, color = '#B4452A' }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden="true">
@@ -94,7 +94,7 @@ export function ChemistryIcon({ size = 48, color = '#B4452A' }) {
   );
 }
 
-/** Physics section — circuit/ammeter icon */
+/** Physics section - circuit/ammeter icon */
 export function PhysicsIcon({ size = 48, color = '#2A5B8C' }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden="true">
@@ -112,7 +112,7 @@ export function PhysicsIcon({ size = 48, color = '#2A5B8C' }) {
   );
 }
 
-/** Biology section — leaf/microscope icon */
+/** Biology section - leaf/microscope icon */
 export function BiologyIcon({ size = 48, color = '#5B7A3A' }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" fill="none" aria-hidden="true">

@@ -1,6 +1,6 @@
 # VirtuLab Kenya
 
-Free, browser-based virtual science practicals for Kenyan secondary school students. Twelve KCSE-aligned experiments across Chemistry, Physics and Biology — no lab equipment needed.
+Free, browser-based virtual science practicals for Kenyan secondary school students. Twelve KCSE-aligned experiments across Chemistry, Physics and Biology - no lab equipment needed.
 
 ## Stack
 
@@ -13,11 +13,11 @@ Free, browser-based virtual science practicals for Kenyan secondary school stude
 
 | Route | Description |
 |---|---|
-| `/` | Landing page — hero, problem statement, subject overview, how it works |
-| `/signup` | Account creation — wired to Firebase Auth |
+| `/` | Landing page - hero, problem statement, subject overview, how it works |
+| `/signup` | Account creation - wired to Firebase Auth |
 | `/login` | Log in (UI complete, Firebase wiring in progress) |
-| `/experiments` | Catalogue — all 12 experiments with subject filter tabs |
-| `/experiments/[id]` | Shared detail template — used by all 12 experiments |
+| `/experiments` | Catalogue - all 12 experiments with subject filter tabs |
+| `/experiments/[id]` | Shared detail template - used by all 12 experiments |
 
 ## Local setup
 
@@ -53,10 +53,10 @@ Copy `.env.example` to `.env.local` and fill in your Firebase project values. Ne
 ```
 virtulab-app/
 ├── app/
-│   ├── globals.css          # Design system — all tokens, type scale, shared components
+│   ├── globals.css          # Design system - all tokens, type scale, shared components
 │   ├── layout.js            # Root layout
 │   ├── page.js              # Home page
-│   ├── signup/page.js       # Sign up — Firebase Auth connected
+│   ├── signup/page.js       # Sign up - Firebase Auth connected
 │   ├── login/page.js        # Log in
 │   └── experiments/
 │       ├── page.js          # Experiment catalogue (all 12)
@@ -78,4 +78,4 @@ See [`docs/02-design-system.md`](../docs/02-design-system.md) for the full speci
 
 ## Status
 
-Frontend build complete. Auth (sign up) wired to Firebase. Experiment 3D simulations are not yet built — the detail pages show a preview of what each lab will cover.
+Frontend build complete. Auth (sign up) wired to Firebase. Experiment 3D simulations are not yet built - the detail pages show a preview of what each lab will cover.

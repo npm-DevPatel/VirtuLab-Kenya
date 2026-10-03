@@ -41,7 +41,7 @@ export default function LoginPage() {
       return;
     }
     setSubmitting(true);
-    // Placeholder — no real auth in this build.
+    // Placeholder - no real auth in this build.
     // In production this would call Supabase auth.signInWithPassword().
     await new Promise((r) => setTimeout(r, 1100));
     setSubmitting(false);
@@ -121,7 +121,7 @@ export default function LoginPage() {
                   <Spinner /> Logging in…
                 </>
               ) : submitted ? (
-                'Done — redirecting…'
+                'Done - redirecting…'
               ) : (
                 'Log In'
               )}
@@ -130,7 +130,7 @@ export default function LoginPage() {
 
           <p className={styles.switchLink}>
             Don&rsquo;t have an account?{' '}
-            <Link href="/signup">Create one — it&rsquo;s free.</Link>
+            <Link href="/signup">Create one - it&rsquo;s free.</Link>
           </p>
         </div>
       </main>

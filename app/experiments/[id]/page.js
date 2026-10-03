@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
   const exp = getExperiment(id);
   if (!exp) return {};
   return {
-    title: `${exp.title} — ${exp.subject}`,
+    title: `${exp.title} - ${exp.subject}`,
     description: exp.description,
   };
 }

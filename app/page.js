@@ -2,12 +2,13 @@ import Link from 'next/link';
 import SiteNav from '@/components/Nav';
 import { HeroIllustration, ChemistryIcon, PhysicsIcon, BiologyIcon } from '@/components/Illustrations';
 import { getBySubject } from '@/lib/experiments';
+import { HeroCtas, CtaStrip } from '@/components/AuthAwareCTAs';
 import styles from './home.module.css';
 
 export const metadata = {
-  title: 'VirtuLab Kenya — Virtual Science Practicals for Secondary Schools',
+  title: 'VirtuLab Kenya - Virtual Science Practicals for Secondary Schools',
   description:
-    'Free, guided, KCSE-aligned virtual lab practicals for Kenyan secondary schools. Run Chemistry, Physics and Biology experiments — no equipment needed.',
+    'Free, guided, KCSE-aligned virtual lab practicals for Kenyan secondary schools. Run Chemistry, Physics and Biology experiments - no equipment needed.',
 };
 
 const subjectData = [
@@ -29,7 +30,7 @@ const subjectData = [
     Icon: PhysicsIcon,
     iconColor: '#2A5B8C',
     description:
-      'Circuit experiments, optics with convex lenses, and classical mechanics — pendula, springs and Hooke\'s Law.',
+      'Circuit experiments, optics with convex lenses, and classical mechanics - pendula, springs and Hooke\'s Law.',
   },
   {
     id: 'biology',
@@ -44,7 +45,7 @@ const subjectData = [
 ];
 
 const howItWorks = [
-  { n: '01', step: 'Create a free account — no card, no spam.' },
+  { n: '01', step: 'Create a free account - no card, no spam.' },
   { n: '02', step: 'Browse the catalogue and pick the practical your class is covering.' },
   { n: '03', step: 'Follow the guided, step-by-step 3D simulation of the real lab procedure.' },
   { n: '04', step: 'Review your results and compare against expected values.' },
@@ -68,13 +69,14 @@ export default function HomePage() {
               </h1>
               <p className={styles.heroSub}>
                 A free, guided virtual lab for Kenyan secondary school students. Twelve
-                KCSE-aligned experiments across Chemistry, Physics and Biology — no
+                KCSE-aligned experiments across Chemistry, Physics and Biology - no
                 equipment, no reagents, no working lab needed.
               </p>
-              <div className={styles.heroCtas}>
-                <Link href="/signup" className="btn btn-primary">Create Your Account</Link>
-                <Link href="/experiments" className="btn btn-secondary">Browse Experiments</Link>
-              </div>
+              <HeroCtas 
+                className={styles.heroCtas} 
+                btnPrimaryClass="btn btn-primary" 
+                btnSecondaryClass="btn btn-secondary" 
+              />
             </div>
             <div className={styles.heroArt} aria-hidden="true">
               <HeroIllustration className={styles.heroSvg} />
@@ -92,7 +94,7 @@ export default function HomePage() {
               Most Kenyan public secondary schools do not have functional science labs. Chemicals
               are unavailable, equipment is broken or absent, and practical examinations still
               appear on the KCSE. Students prepare for experiments they have never done. VirtuLab
-              Kenya is a direct response to that gap — not a supplement for schools that already
+              Kenya is a direct response to that gap - not a supplement for schools that already
               have labs, but a substitute for those that don&rsquo;t.
             </p>
           </div>
@@ -156,15 +158,13 @@ export default function HomePage() {
         <hr className="divider" />
 
         {/* ── CTA strip ───────────────────────────────────────────── */}
-        <section className={styles.ctaStrip} aria-label="Sign up call to action">
-          <div className="container">
-            <h2 className={styles.ctaHeading}>Ready to try it?</h2>
-            <p className={`text-muted ${styles.ctaSub}`}>
-              Free for students and teachers. No card required.
-            </p>
-            <Link href="/signup" className="btn btn-primary">Create Your Account</Link>
-          </div>
-        </section>
+        <CtaStrip 
+          sectionClass={styles.ctaStrip}
+          containerClass="container"
+          headingClass={styles.ctaHeading}
+          subClass={styles.ctaSub}
+          btnClass="btn btn-primary"
+        />
       </main>
 
       {/* ── Footer ──────────────────────────────────────────────── */}

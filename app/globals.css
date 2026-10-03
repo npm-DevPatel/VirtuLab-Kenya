@@ -1,5 +1,5 @@
 /* ============================================================
-   VirtuLab Kenya — Global Design System
+   VirtuLab Kenya - Global Design System
    Fonts: Fraunces (headings), IBM Plex Sans (body/UI),
           IBM Plex Mono (data/numbers)
    ============================================================ */
@@ -8,18 +8,18 @@
 
 /* ── Color tokens ──────────────────────────────────────────── */
 :root {
-  /* Base — warm paper neutrals */
+  /* Base - warm paper neutrals */
   --paper:        #FAF7F0;
   --paper-dim:    #F0EBE0;
   --ink:          #1E1B16;
   --ink-muted:    #5C564B;
 
-  /* Accent — deep lab-glass green */
+  /* Accent - deep lab-glass green */
   --accent:       #1F6E4F;
   --accent-dim:   #163F30;
   --accent-tint:  #E4EEE7;
 
-  /* Subject colors — small tags/markers only */
+  /* Subject colors - small tags/markers only */
   --chemistry:    #B4452A;
   --physics:      #2A5B8C;
   --biology:      #5B7A3A;

@@ -2,15 +2,32 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 import styles from './Nav.module.css';
 
 /**
- * SiteNav — top navigation bar.
- * loggedIn prop controls whether to show user menu or log in / sign up.
+ * SiteNav - top navigation bar.
  */
-export default function SiteNav({ loggedIn = false }) {
+export default function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setLoggedIn(!!user);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 4);
@@ -33,10 +50,13 @@ export default function SiteNav({ loggedIn = false }) {
           <Link href="/#how-it-works" className={styles.navLink}>How it works</Link>
         </nav>
 
-        {/* Auth area — desktop */}
+        {/* Auth area - desktop */}
         <div className={styles.auth}>
           {loggedIn ? (
-            <Link href="/experiments" className="btn btn-primary">My Experiments</Link>
+            <>
+              <Link href="/experiments" className="btn btn-primary">My Experiments</Link>
+              <button onClick={handleLogout} className={styles.navLink} style={{background: 'none', border: 'none', cursor: 'pointer', padding: 0}}>Sign out</button>
+            </>
           ) : (
             <>
               <Link href="/login" className={styles.navLink}>Log in</Link>
@@ -65,7 +85,10 @@ export default function SiteNav({ loggedIn = false }) {
           <Link href="/#how-it-works" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>How it works</Link>
           <hr className="divider" />
           {loggedIn ? (
-            <Link href="/experiments" className={`btn btn-primary ${styles.mobileAuthBtn}`}>My Experiments</Link>
+            <>
+              <Link href="/experiments" className={`btn btn-primary ${styles.mobileAuthBtn}`}>My Experiments</Link>
+              <button onClick={handleLogout} className={styles.mobileLink} style={{background: 'none', border: 'none', cursor: 'pointer', padding: 'var(--sp-2) 0', textAlign: 'left', width: 'fit-content'}}>Sign out</button>
+            </>
           ) : (
             <>
               <Link href="/login" className={styles.mobileLink} onClick={() => setMenuOpen(false)}>Log in</Link>
@@ -81,7 +104,7 @@ export default function SiteNav({ loggedIn = false }) {
 function LogoMark() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-      {/* Stylised flask — two lines for the neck, triangular body, a drop inside */}
+      {/* Stylised flask - two lines for the neck, triangular body, a drop inside */}
       <rect x="11" y="2" width="6" height="8" rx="1" fill="none" stroke="currentColor" strokeWidth="1.6"/>
       <path d="M11 10 L4 24 Q3.5 26 6 26 H22 Q24.5 26 24 24 L17 10 Z" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
       <circle cx="14" cy="19" r="2.5" fill="currentColor" opacity="0.25"/>
