@@ -1,4 +1,4 @@
-﻿# Project specification docs â€” local only, not published to GitHub
+# Project specification docs â€” local only, not published to GitHub
 docs/
 
 # Next.js app (merged from virtulab-app/.gitignore)
@@ -43,3 +43,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Agent docs
+AGENTS.md
+CLAUDE.md
