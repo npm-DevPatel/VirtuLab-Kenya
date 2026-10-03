@@ -3,8 +3,30 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { signInWithEmailAndPassword, AuthErrorCodes } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 import SiteNav from '@/components/Nav';
 import styles from '../auth.module.css';
+
+// ── Map Firebase error codes to plain, specific messages ───
+function firebaseErrorMessage(code) {
+  switch (code) {
+    case AuthErrorCodes.INVALID_EMAIL:
+    case 'auth/invalid-email':
+    case AuthErrorCodes.USER_DELETED:
+    case 'auth/user-not-found':
+    case AuthErrorCodes.INVALID_PASSWORD:
+    case 'auth/wrong-password':
+    case 'auth/invalid-credential':
+      return 'Invalid email or password.';
+    case 'auth/network-request-failed':
+      return 'Network error - check your connection and try again.';
+    case 'auth/too-many-requests':
+      return 'Too many attempts. Wait a moment before trying again.';
+    default:
+      return 'Something went wrong. Please try again.';
+  }
+}
 
 function validate(fields) {
   const errors = {};
@@ -24,6 +46,7 @@ export default function LoginPage() {
 
   const [fields, setFields] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
+  const [formError, setFormError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
@@ -31,6 +54,7 @@ export default function LoginPage() {
     const { name, value } = e.target;
     setFields((f) => ({ ...f, [name]: value }));
     if (errors[name]) setErrors((er) => ({ ...er, [name]: undefined }));
+    if (formError) setFormError('');
   }
 
   async function handleSubmit(e) {
@@ -41,12 +65,16 @@ export default function LoginPage() {
       return;
     }
     setSubmitting(true);
-    // Placeholder - no real auth in this build.
-    // In production this would call Supabase auth.signInWithPassword().
-    await new Promise((r) => setTimeout(r, 1100));
-    setSubmitting(false);
-    setSubmitted(true);
-    setTimeout(() => router.push('/experiments'), 700);
+    setFormError('');
+
+    try {
+      await signInWithEmailAndPassword(auth, fields.email.trim(), fields.password);
+      setSubmitted(true);
+      setTimeout(() => router.push('/experiments'), 700);
+    } catch (err) {
+      setSubmitting(false);
+      setFormError(firebaseErrorMessage(err.code));
+    }
   }
 
   return (
@@ -67,6 +95,13 @@ export default function LoginPage() {
             noValidate
             aria-label="Log in form"
           >
+            {/* Form-level error */}
+            {formError && (
+              <div className={styles.formErrorBanner} role="alert">
+                {formError}
+              </div>
+            )}
+
             {/* Email */}
             <div className="form-group">
               <label htmlFor="login-email" className="form-label">Email address</label>
