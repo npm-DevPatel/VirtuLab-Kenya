@@ -1,0 +1,666 @@
+#app {
+    --bg-header: #0f172a;
+    --bg-sidebar: #ffffff;
+    --bg-subtle: #f1f5f9;
+    --text-dark: #0f172a;
+    --text-body: #334155;
+    --text-muted: #64748b;
+    --border-color: #cbd5e1;
+    --accent-teal: #0d9488;
+    --accent-teal-hover: #0f766e;
+    --accent-pink: #db2777;
+    --accent-blue: #2563eb;
+    --font-serif: 'Fraunces', Georgia, serif;
+    --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    font-family: var(--font-sans);
+    background-color: #eef2f6;
+    color: var(--text-dark);
+    overflow: hidden;
+    user-select: none;
+}
+
+body:has(#app) {
+    overflow: hidden;
+    height: 100vh;
+}
+
+#app,
+#app * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* 1. Top Navigation Bar */
+.lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 54px;
+    background: var(--bg-header);
+    color: #ffffff;
+    border-bottom: 1px solid #1e293b;
+    flex-shrink: 0;
+    z-index: 30;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    background: rgba(13, 148, 136, 0.25);
+    border: 1px solid #14b8a6;
+    color: #5eead4;
+    border-radius: 4px;
+}
+
+.lab-header h1 {
+    font-family: var(--font-serif);
+    font-size: 16.5px;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 6px 11px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-chip.active {
+    background: rgba(13, 148, 136, 0.25);
+    border-color: #2dd4bf;
+    color: #ffffff;
+}
+
+.dot-indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #64748b;
+}
+
+.btn-chip.active .dot-indicator {
+    background: #2dd4bf;
+    box-shadow: 0 0 6px #2dd4bf;
+}
+
+.btn-outline {
+    background: transparent;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 11px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    line-height: normal;
+    font-family: var(--font-sans);
+}
+
+.btn-outline:hover {
+    color: #ffffff;
+    border-color: #ffffff;
+}
+
+/* 2. Split Workspace (3D Viewport + Sidebar) */
+.workspace {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    overflow: hidden;
+}
+
+.workspace.dock-left {
+    flex-direction: row-reverse;
+}
+
+.canvas-stage {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.canvas-stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+
+.canvas-stage canvas:active {
+    cursor: grabbing;
+}
+
+/* Floating Toggle Button when Sidebar is Collapsed */
+.sidebar-toggle-fab {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 15;
+    background: rgba(15, 23, 42, 0.88);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+.workspace.dock-left .sidebar-toggle-fab {
+    right: auto;
+    left: 14px;
+}
+
+/* 3D Floating Equipment Labels */
+.labels-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.labels-layer.hidden {
+    display: none;
+}
+
+.lab-label {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(15, 23, 42, 0.86);
+    backdrop-filter: blur(4px);
+    color: #f8fafc;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    border-left: 3px solid #2dd4bf;
+    padding: 4px 9px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+.lab-label small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: #cbd5e1;
+}
+
+/* 3. Unified Sidebar (Top Half: Steps | Bottom Half: Tabbed Options) */
+.lab-sidebar {
+    width: 350px;
+    height: 100%;
+    background: var(--bg-sidebar);
+    border-left: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    z-index: 20;
+    transition: margin 0.22s ease;
+}
+
+.workspace.dock-left .lab-sidebar {
+    border-left: none;
+    border-right: 2px solid var(--border-color);
+}
+
+.lab-sidebar.collapsed {
+    display: none;
+}
+
+/* TOP HALF: Locked Experiment Steps */
+.sidebar-top-steps {
+    padding: 18px 18px 16px;
+    border-bottom: 2px solid var(--border-color);
+    background: #fafaf7;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.step-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.step-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    color: #0f766e;
+    background: #ccfbf1;
+    border: 1px solid #5eead4;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.sidebar-top-steps h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.25;
+}
+
+.sidebar-top-steps p {
+    font-size: 13px;
+    color: var(--text-body);
+    line-height: 1.48;
+}
+
+.step-actions {
+    margin-top: 6px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.titration-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+/* Status Pill */
+.status-pill {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.status-neutral {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.status-alkaline {
+    background: #fce7f3;
+    color: #be185d;
+    border: 1px solid #f9a8d4;
+}
+
+.status-endpoint {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+}
+
+.status-overshot {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+/* BOTTOM HALF: Icon Tab Navigation & Panes */
+.sidebar-bottom-tabs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.tab-icon-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: var(--bg-subtle);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.tab-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 6px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-muted);
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.tab-btn:hover {
+    color: var(--text-dark);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.tab-btn.active {
+    background: #ffffff;
+    color: var(--accent-teal);
+    border-bottom-color: var(--accent-teal);
+}
+
+.tab-panels {
+    flex: 1;
+    padding: 16px 18px;
+    overflow-y: auto;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.pane-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+/* Tab 1: Burette Titrant Widget */
+.burette-widget {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 14px;
+}
+
+.sub-label {
+    display: block;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.readout-value {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.readout-value small {
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.flask-summary {
+    font-size: 12.5px;
+    color: var(--text-body);
+    line-height: 1.5;
+}
+
+/* 2D Optical Meniscus Loupe */
+.meniscus-loupe {
+    width: 92px;
+    background: #ffffff;
+    border: 2px solid #475569;
+    border-radius: 6px;
+    padding: 5px;
+    text-align: center;
+}
+
+.loupe-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: #475569;
+    margin-bottom: 4px;
+}
+
+.loupe-tube {
+    position: relative;
+    height: 82px;
+    background: linear-gradient(90deg, #e2e8f0 0%, #ffffff 50%, #cbd5e1 100%);
+    border-left: 2px solid #1e293b;
+    border-right: 2px solid #1e293b;
+    overflow: hidden;
+}
+
+.loupe-ticks {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 3px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    color: #1e293b;
+    z-index: 3;
+    text-align: left;
+}
+
+.loupe-ticks span {
+    border-bottom: 1px solid rgba(15, 23, 42, 0.3);
+    width: 100%;
+}
+
+.loupe-water {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 52%;
+    background: rgba(56, 189, 248, 0.55);
+    z-index: 1;
+}
+
+.meniscus-curve {
+    position: absolute;
+    top: -7px;
+    left: -4px;
+    right: -4px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    border-bottom: 2.5px solid #0284c7;
+}
+
+.loupe-redline {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1.5px dashed #dc2626;
+    z-index: 4;
+}
+
+/* Tab 2: Procedure Checklist */
+.step-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.step-list li {
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 8px 10px;
+    background: var(--bg-subtle);
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.step-list li.done {
+    color: #065f46;
+    background: #ecfdf5;
+    border-color: #a7f3d0;
+}
+
+.step-list li.done::before {
+    content: '✓ ';
+    font-weight: 700;
+}
+
+.step-list li.active {
+    background: #f0fdfa;
+    color: #0f766e;
+    font-weight: 600;
+    border-color: #5eead4;
+}
+
+/* Tab 3: Camera Controls */
+.cam-preset-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.btn-cam {
+    text-align: left;
+    padding: 9px 12px;
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    color: var(--text-dark);
+    border-radius: 5px;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-cam.active,
+.btn-cam:hover {
+    background: var(--accent-teal);
+    color: #ffffff;
+    border-color: var(--accent-teal);
+}
+
+.hint-list {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.hint-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-body);
+}
+
+#app kbd {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+/* Standard Action Buttons */
+#app button {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+#app button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+#app .btn-primary {
+    background: #0f172a;
+    color: #ffffff;
+    border: 1px solid #0f172a;
+}
+
+#app .btn-primary:hover:not(:disabled) {
+    background: #1e293b;
+}
+
+#app .btn-pink {
+    background: var(--accent-pink);
+    border-color: var(--accent-pink);
+}
+
+#app .btn-pink:hover:not(:disabled) {
+    background: #be185d;
+}
+
+#app .btn-action {
+    background: var(--accent-blue);
+    color: #ffffff;
+    border: 1px solid #1d4ed8;
+}
+
+#app .btn-accent {
+    background: var(--accent-teal);
+    color: #ffffff;
+    border: 1px solid var(--accent-teal);
+}
+
+#app .btn-secondary {
+    background: #ffffff;
+    color: var(--text-dark);
+    border: 1px solid var(--border-color);
+}
+
+#app .hidden {
+    display: none !important;
+}

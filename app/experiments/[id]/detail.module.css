@@ -120,6 +120,102 @@
   border-top: 1px solid var(--border);
 }
 
+/* Ready simulation block */
+.readyBlock {
+  border: 1px solid rgba(31, 110, 79, 0.25);
+  border-left: 4px solid var(--accent);
+  background-color: var(--accent-tint);
+  padding: var(--sp-6);
+  margin-bottom: var(--sp-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  box-shadow: 0 2px 8px rgba(31, 110, 79, 0.08);
+}
+
+.readyBadgeRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.readyBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--accent);
+  color: var(--paper);
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--r-sm);
+}
+
+.readyBadgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #5eead4;
+  box-shadow: 0 0 6px #5eead4;
+}
+
+.readyHeading {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: var(--text-h2);
+  line-height: var(--lh-h2);
+  font-weight: 600;
+  color: var(--accent-dim);
+}
+
+.readyText {
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink);
+  max-width: 60ch;
+}
+
+.readyActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4);
+  margin-top: var(--sp-2);
+}
+
+.lockedNotice {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--text-small);
+  color: var(--ink-muted);
+}
+
+/* Locked state card */
+.lockedCard {
+  border: 1px solid #fed7aa;
+  border-left: 4px solid #ea580c;
+  background-color: #fff7ed;
+  padding: var(--sp-6);
+  margin-bottom: var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  border-radius: var(--r-sm);
+}
+
+.lockedCardHeading {
+  font-size: var(--text-h3);
+  color: #9a3412;
+  font-weight: 600;
+}
+
+.lockedCardText {
+  font-size: var(--text-body);
+  color: #7c2d12;
+}
+
 @media (max-width: 768px) {
   .title {
     max-width: none;

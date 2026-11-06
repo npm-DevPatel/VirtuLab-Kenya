@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signInWithEmailAndPassword, AuthErrorCodes } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import SiteNav from '@/components/Nav';
@@ -41,8 +41,10 @@ function validate(fields) {
   return errors;
 }
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get('redirect') || '/experiments';
 
   const [fields, setFields] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
@@ -70,7 +72,7 @@ export default function LoginPage() {
     try {
       await signInWithEmailAndPassword(auth, fields.email.trim(), fields.password);
       setSubmitted(true);
-      setTimeout(() => router.push('/experiments'), 700);
+      setTimeout(() => router.push(redirectUrl), 700);
     } catch (err) {
       setSubmitting(false);
       setFormError(firebaseErrorMessage(err.code));
@@ -170,6 +172,25 @@ export default function LoginPage() {
         </div>
       </main>
     </>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <>
+          <SiteNav />
+          <main className={styles.authPage}>
+            <div className={styles.authCard}>
+              <p className="text-muted">Loading...</p>
+            </div>
+          </main>
+        </>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
 

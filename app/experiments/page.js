@@ -83,7 +83,15 @@ export default function ExperimentsPage() {
                       <h3 className="experiment-card__title">{exp.title}</h3>
                       <p className="experiment-card__desc">{exp.description}</p>
                       <span className="experiment-card__status">
-                        <ArrowIcon /> Preview available
+                        {exp.hasInteractiveSim ? (
+                          <>
+                            <span style={{ color: 'var(--accent)', fontWeight: 700 }}>●</span> 3D Lab Ready
+                          </>
+                        ) : (
+                          <>
+                            <ArrowIcon /> Preview available
+                          </>
+                        )}
                       </span>
                     </Link>
                   ))}

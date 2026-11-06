@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exp 1: Volumetric Analysis (Titration) — VirtuLab Kenya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div id="app">
+    <!-- Top Navigation Bar -->
+    <header class="lab-header">
+      <div class="header-left">
+        <span class="badge">KCSE 233/3</span>
+        <h1>EXP 1: Volumetric Analysis (Acid–Base Titration)</h1>
+      </div>
+
+      <div class="header-right">
+        <button id="btn-toggle-labels" class="btn-chip active" title="Show/Hide 3D Apparatus Names">
+          <span class="dot-indicator"></span> 3D Labels: ON
+        </button>
+        <button id="btn-swap-side" class="btn-outline" title="Move Sidebar Left or Right">
+          ⇄ Dock Left / Right
+        </button>
+        <button id="btn-reset" class="btn-outline">Reset Lab</button>
+      </div>
+    </header>
+
+    <!-- Main Split Workspace: Pure 3D View + Unified Sidebar -->
+    <main id="workspace" class="workspace dock-right">
+      <!-- 100% Uncluttered 3D Viewport -->
+      <div id="canvas-container" class="canvas-stage">
+        <div id="labels-layer" class="labels-layer"></div>
+
+        <!-- Floating Sidebar Collapse/Expand Tab -->
+        <button id="btn-collapse-sidebar" class="sidebar-toggle-fab" title="Collapse / Expand Sidebar">
+          ☰ Lab Panel
+        </button>
+      </div>
+
+      <!-- Unified Lab Sidebar -->
+      <aside id="lab-sidebar" class="lab-sidebar">
+        <!-- TOP HALF: Locked Active Experiment Steps & Actions -->
+        <section class="sidebar-top-steps">
+          <div class="step-header-row">
+            <span id="step-counter" class="step-tag">STEP 1 OF 5</span>
+            <span id="endpoint-badge" class="status-pill status-neutral">Flask Empty</span>
+          </div>
+
+          <h2 id="step-title">Pipette 25.0 cm³ of 0.1M NaOH</h2>
+          <p id="step-instruction">
+            Draw 25.0 cm³ of Sodium Hydroxide (Solution B) from the beaker using the volumetric pipette and transfer it
+            into the conical flask on the white tile.
+          </p>
+
+          <!-- Step Action Buttons -->
+          <div class="step-actions">
+            <button id="btn-step1" class="btn-primary full-width">
+              Pipette 25.0 cm³ NaOH into Flask →
+            </button>
+
+            <button id="btn-step2" class="btn-primary btn-pink full-width hidden">
+              Add 3 Drops Phenolphthalein →
+            </button>
+
+            <button id="btn-step3" class="btn-primary full-width hidden">
+              Confirm 0.00 cm³ Meniscus Level →
+            </button>
+
+            <div id="titration-controls" class="titration-grid hidden">
+              <button id="btn-stream" class="btn-action" title="Hold down for continuous stream">
+                Hold: Fast Stream
+              </button>
+              <button id="btn-drop" class="btn-accent" title="Add single 0.05 cm³ drop">
+                + Single Drop (0.05)
+              </button>
+              <button id="btn-swirl" class="btn-secondary">
+                Swirl Flask
+              </button>
+              <button id="btn-record" class="btn-primary">
+                Record Final Titre ✓
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- BOTTOM HALF: Icon Tabs for Burette Titrant, Progress & 3D Controls -->
+        <section class="sidebar-bottom-tabs">
+          <nav class="tab-icon-bar" role="tablist">
+            <button class="tab-btn active" data-tab="tab-burette" title="Burette Titrant & Meniscus">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 2v17a3 3 0 0 0 6 0V2" />
+                <line x1="7" y1="2" x2="17" y2="2" />
+                <line x1="9" y1="12" x2="15" y2="12" />
+              </svg>
+              <span>Burette</span>
+            </button>
+
+            <button class="tab-btn" data-tab="tab-progress" title="Procedure Progress">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 11l3 3L22 4" />
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+              </svg>
+              <span>Progress</span>
+            </button>
+
+            <button class="tab-btn" data-tab="tab-camera" title="3D Camera Controls">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+              <span>3D View</span>
+            </button>
+          </nav>
+
+          <!-- Tab Content Panels -->
+          <div class="tab-panels">
+            <!-- TAB 1: Burette Titrant & Live Meniscus Zoom -->
+            <div id="tab-burette" class="tab-pane active">
+              <div class="pane-title">Burette Titrant (0.1M HCl)</div>
+              <div class="burette-widget">
+                <div class="digital-block">
+                  <span class="sub-label">Volume Dispensed</span>
+                  <div class="readout-value">
+                    <span id="burette-val">0.00</span> <small>cm³</small>
+                  </div>
+                  <div class="flask-summary">
+                    <div>Flask Vol: <strong id="flask-vol-val">0.0</strong> cm³</div>
+                    <div>Endpoint: <strong>24.80 cm³</strong></div>
+                  </div>
+                </div>
+
+                <div class="meniscus-loupe" title="Live Optical Meniscus Zoom">
+                  <div class="loupe-label">MENISCUS</div>
+                  <div class="loupe-tube">
+                    <div class="loupe-ticks">
+                      <span id="tick-top">0.0</span>
+                      <span id="tick-mid">0.00</span>
+                      <span id="tick-bot">0.5</span>
+                    </div>
+                    <div class="loupe-water">
+                      <div class="meniscus-curve"></div>
+                    </div>
+                    <div class="loupe-redline"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB 2: Procedure Checklist -->
+            <div id="tab-progress" class="tab-pane">
+              <div class="pane-title">KCSE Procedure Checklist</div>
+              <ul class="step-list" id="step-checklist">
+                <li data-step="1" class="active">1. Pipette 25.0 cm³ NaOH</li>
+                <li data-step="2">2. Add Phenolphthalein</li>
+                <li data-step="3">3. Zero Burette Meniscus</li>
+                <li data-step="4">4. Titrate to End-Point</li>
+                <li data-step="5">5. Record Final Titre</li>
+              </ul>
+            </div>
+
+            <!-- TAB 3: 3D Camera Controls & Presets -->
+            <div id="tab-camera" class="tab-pane">
+              <div class="pane-title">Camera Snap Angles</div>
+              <div class="cam-preset-grid">
+                <button id="cam-bench" class="btn-cam active">Full Bench View</button>
+                <button id="cam-meniscus" class="btn-cam">Zoom Burette Scale</button>
+                <button id="cam-flask" class="btn-cam">Zoom Conical Flask</button>
+              </div>
+
+              <div class="pane-title" style="margin-top: 14px;">Mouse 3D Orbit Controls</div>
+              <div class="hint-list">
+                <div class="hint-row"><kbd>Left Drag</kbd> <span>Orbit 360° around Lab</span></div>
+                <div class="hint-row"><kbd>Scroll</kbd> <span>Zoom In / Out</span></div>
+                <div class="hint-row"><kbd>Right Drag</kbd> <span>Pan Camera</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
