@@ -156,7 +156,18 @@ export default function Exp1Titration({ onExit }) {
           gap: '16px',
         }}
       >
-        <p style={{ fontSize: '18px', fontWeight: 500 }}>Loading 3D Laboratory...</p>
+        <div
+          style={{
+            width: '42px',
+            height: '42px',
+            border: '3px solid rgba(45, 212, 191, 0.2)',
+            borderTopColor: '#2dd4bf',
+            borderRadius: '50%',
+            animation: 'labSpin 0.9s linear infinite',
+          }}
+        />
+        <style>{`@keyframes labSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+        <p style={{ fontSize: '15px', fontWeight: 500, color: '#94a3b8' }}>Loading 3D Laboratory...</p>
       </div>
     );
   }
@@ -431,11 +442,13 @@ export default function Exp1Titration({ onExit }) {
                   <button id="cam-flask" className="btn-cam">Zoom Conical Flask</button>
                 </div>
 
-                <div className="pane-title" style={{ marginTop: '14px' }}>Mouse 3D Orbit Controls</div>
-                <div className="hint-list">
-                  <div className="hint-row"><kbd>Left Drag</kbd> <span>Orbit 360° around Lab</span></div>
-                  <div className="hint-row"><kbd>Scroll</kbd> <span>Zoom In / Out</span></div>
-                  <div className="hint-row"><kbd>Right Drag</kbd> <span>Pan Camera</span></div>
+                <div className="pane-section">
+                  <div className="pane-title">Mouse 3D Orbit Controls</div>
+                  <div className="hint-list">
+                    <div className="hint-row"><kbd>Left Drag</kbd> <span>Orbit 360° around Lab</span></div>
+                    <div className="hint-row"><kbd>Scroll</kbd> <span>Zoom In / Out</span></div>
+                    <div className="hint-row"><kbd>Right Drag</kbd> <span>Pan Camera</span></div>
+                  </div>
                 </div>
               </div>
             </div>

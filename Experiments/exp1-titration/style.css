@@ -50,7 +50,8 @@ body:has(#app) {
     height: 54px;
     background: var(--bg-header);
     color: #ffffff;
-    border-bottom: 1px solid #1e293b;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    box-shadow: 0 1px 0 #0d9488, 0 2px 8px rgba(0,0,0,0.3);
     flex-shrink: 0;
     z-index: 30;
 }
@@ -117,24 +118,27 @@ body:has(#app) {
 }
 
 .btn-outline {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.05);
     color: #cbd5e1;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 6px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 6px 12px;
     font-size: 12px;
-    border-radius: 4px;
+    font-weight: 500;
+    border-radius: 6px;
     cursor: pointer;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     line-height: normal;
     font-family: var(--font-sans);
+    transition: all 0.15s ease;
 }
 
 .btn-outline:hover {
     color: #ffffff;
-    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 /* 2. Split Workspace (3D Viewport + Sidebar) */
@@ -154,7 +158,7 @@ body:has(#app) {
     flex: 1;
     position: relative;
     height: 100%;
-    background: #e2e8f0;
+    background: radial-gradient(circle at 50% 45%, #f1f5f9 0%, #e2e8f0 100%);
     overflow: hidden;
 }
 
@@ -175,15 +179,22 @@ body:has(#app) {
     top: 14px;
     right: 14px;
     z-index: 15;
-    background: rgba(15, 23, 42, 0.88);
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(8px);
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 7px 12px;
+    padding: 8px 14px;
     font-size: 12px;
     font-weight: 600;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    transition: all 0.15s ease;
+}
+
+.sidebar-toggle-fab:hover {
+    background: rgba(15, 23, 42, 0.95);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 .workspace.dock-left .sidebar-toggle-fab {
@@ -231,12 +242,12 @@ body:has(#app) {
     width: 420px;
     height: 100%;
     background: var(--bg-sidebar);
-    border-left: 2px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -4px 0 20px rgba(15, 23, 42, 0.06);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
     z-index: 20;
-    transition: margin 0.22s ease;
 }
 
 @media (max-width: 1024px) {
@@ -247,21 +258,29 @@ body:has(#app) {
 
 .workspace.dock-left .lab-sidebar {
     border-left: none;
-    border-right: 2px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    box-shadow: 4px 0 20px rgba(15, 23, 42, 0.06);
 }
 
 .lab-sidebar.collapsed {
     display: none;
 }
 
-/* TOP HALF: Locked Experiment Steps */
+/* ── TOP HALF: Active Experiment Steps ───────────────────── */
 .sidebar-top-steps {
-    padding: 20px 22px 18px;
-    border-bottom: 2px solid var(--border-color);
-    background: #fafaf7;
+    padding: 22px 24px 20px;
+    border-bottom: 1px solid var(--border-color);
+    background: #f8fafc;
+    border-left: 4px solid var(--accent-teal);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
+    flex-shrink: 0;
+}
+
+.workspace.dock-left .sidebar-top-steps {
+    border-left: none;
+    border-right: 4px solid var(--accent-teal);
 }
 
 .step-header-row {
@@ -274,29 +293,40 @@ body:has(#app) {
 .step-tag {
     font-family: var(--font-mono);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     color: #0f766e;
     background: #ccfbf1;
     border: 1px solid #5eead4;
-    padding: 2px 8px;
+    padding: 3px 10px;
     border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 1.3;
+    display: inline-flex;
+    align-items: center;
 }
 
 .sidebar-top-steps h2 {
-    font-size: 16px;
+    font-size: 15.5px;
     font-weight: 700;
     color: var(--text-dark);
-    line-height: 1.35;
+    line-height: 1.4;
+    margin: 0;
 }
 
 .sidebar-top-steps p {
-    font-size: 13.5px;
+    font-size: 13px;
     color: var(--text-body);
-    line-height: 1.52;
+    line-height: 1.6;
+    margin: 0;
 }
 
 .step-actions {
-    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 2px;
 }
 
 .full-width {
@@ -309,13 +339,28 @@ body:has(#app) {
     gap: 8px;
 }
 
+.titration-grid button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 44px;
+    padding: 8px 10px;
+    font-size: 12px;
+}
+
 /* Status Pill */
 .status-pill {
     font-family: var(--font-mono);
-    font-size: 10.5px;
+    font-size: 11px;
     font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 4px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 1.3;
+    display: inline-flex;
+    align-items: center;
 }
 
 .status-neutral {
@@ -341,13 +386,14 @@ body:has(#app) {
     border: 1px solid #fca5a5;
 }
 
-/* BOTTOM HALF: Icon Tab Navigation & Panes */
+/* ── BOTTOM HALF: Tabbed Options ─────────────────────────── */
 .sidebar-bottom-tabs {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     background: #ffffff;
+    min-height: 0;
 }
 
 .tab-icon-bar {
@@ -364,7 +410,7 @@ body:has(#app) {
     align-items: center;
     justify-content: center;
     gap: 5px;
-    padding: 11px 8px;
+    padding: 13px 8px;
     background: transparent;
     border: none;
     border-bottom: 3px solid transparent;
@@ -373,11 +419,12 @@ body:has(#app) {
     font-weight: 600;
     cursor: pointer;
     border-radius: 0;
+    transition: color 0.12s ease, background 0.12s ease;
 }
 
 .tab-btn:hover {
     color: var(--text-dark);
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .tab-btn.active {
@@ -388,8 +435,25 @@ body:has(#app) {
 
 .tab-panels {
     flex: 1;
-    padding: 18px 22px;
+    padding: 20px 24px;
     overflow-y: auto;
+}
+
+.tab-panels::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tab-panels::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tab-panels::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.tab-panels::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 
 .tab-pane {
@@ -397,74 +461,105 @@ body:has(#app) {
 }
 
 .tab-pane.active {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .pane-title {
     font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 10.5px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     color: var(--text-muted);
-    margin-bottom: 12px;
+    margin: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
 }
 
-/* Tab 1: Burette Titrant Widget */
+/* ── Tab 1: Burette Titrant Widget ───────────────────────── */
 .burette-widget {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     background: var(--bg-subtle);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 16px;
+    border-radius: 8px;
+    padding: 18px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.digital-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
 }
 
 .sub-label {
     display: block;
-    font-size: 11px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
     color: var(--text-muted);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .readout-value {
     font-family: var(--font-mono);
-    font-size: 32px;
-    font-weight: 600;
+    font-size: 36px;
+    font-weight: 700;
     color: var(--text-dark);
     line-height: 1;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
 }
 
 .readout-value small {
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--text-muted);
 }
 
 .flask-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     font-size: 12.5px;
     color: var(--text-body);
     line-height: 1.5;
 }
 
-/* 2D Optical Meniscus Loupe */
+.flask-summary strong {
+    color: var(--text-dark);
+    font-weight: 700;
+    font-family: var(--font-mono);
+}
+
+/* ── 2D Optical Meniscus Loupe ────────────────────────────── */
 .meniscus-loupe {
-    width: 92px;
+    width: 104px;
+    flex-shrink: 0;
     background: #ffffff;
     border: 2px solid #475569;
-    border-radius: 6px;
-    padding: 5px;
+    border-radius: 8px;
+    padding: 8px 6px;
     text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .loupe-label {
     font-family: var(--font-mono);
     font-size: 9px;
     font-weight: 700;
+    letter-spacing: 0.06em;
     color: #475569;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .loupe-tube {
@@ -526,21 +621,25 @@ body:has(#app) {
     z-index: 4;
 }
 
-/* Tab 2: Procedure Checklist */
+/* ── Tab 2: Procedure Checklist ──────────────────────────── */
 .step-list {
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin: 0;
+    padding: 0;
 }
 
 .step-list li {
     font-size: 13px;
     color: var(--text-muted);
-    padding: 8px 10px;
+    padding: 11px 14px;
     background: var(--bg-subtle);
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid transparent;
+    line-height: 1.4;
+    transition: all 0.12s ease;
 }
 
 .step-list li.done {
@@ -559,25 +658,28 @@ body:has(#app) {
     color: #0f766e;
     font-weight: 600;
     border-color: #5eead4;
+    border-left: 3px solid #0d9488;
+    padding-left: 12px;
 }
 
-/* Tab 3: Camera Controls */
+/* ── Tab 3: Camera Controls ──────────────────────────────── */
 .cam-preset-grid {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 8px;
 }
 
 .btn-cam {
     text-align: left;
-    padding: 9px 12px;
+    padding: 11px 14px;
     background: var(--bg-subtle);
     border: 1px solid var(--border-color);
     color: var(--text-dark);
-    border-radius: 5px;
-    font-size: 12.5px;
+    border-radius: 6px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.12s ease;
 }
 
 .btn-cam.active,
@@ -590,11 +692,11 @@ body:has(#app) {
 .hint-list {
     background: var(--bg-subtle);
     border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 10px 12px;
+    border-radius: 6px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 10px;
 }
 
 .hint-row {
@@ -604,6 +706,7 @@ body:has(#app) {
     gap: 12px;
     font-size: 12.5px;
     color: var(--text-body);
+    padding: 2px 0;
 }
 
 #app kbd {
@@ -611,65 +714,99 @@ body:has(#app) {
     font-size: 10.5px;
     background: #ffffff;
     border: 1px solid var(--border-color);
-    padding: 2px 6px;
-    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    padding: 3px 8px;
+    border-radius: 4px;
     color: var(--text-dark);
     font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
-/* Standard Action Buttons */
+/* ── Action Buttons ──────────────────────────────────────── */
 #app button {
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 600;
-    padding: 10px 14px;
-    border-radius: 5px;
+    padding: 11px 16px;
+    border-radius: 6px;
     cursor: pointer;
     transition: all 0.15s ease;
+    border: 1px solid transparent;
+    line-height: 1.2;
 }
 
 #app button:disabled {
-    opacity: 0.55;
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
 #app .btn-primary {
     background: #0f172a;
     color: #ffffff;
-    border: 1px solid #0f172a;
+    border-color: #0f172a;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.12);
 }
 
 #app .btn-primary:hover:not(:disabled) {
     background: #1e293b;
+    border-color: #1e293b;
+    box-shadow: 0 4px 8px rgba(15, 23, 42, 0.18);
 }
 
 #app .btn-pink {
     background: var(--accent-pink);
+    color: #ffffff;
     border-color: var(--accent-pink);
+    box-shadow: 0 2px 4px rgba(219, 39, 119, 0.2);
 }
 
 #app .btn-pink:hover:not(:disabled) {
     background: #be185d;
+    border-color: #be185d;
+    box-shadow: 0 4px 8px rgba(219, 39, 119, 0.25);
 }
 
 #app .btn-action {
     background: var(--accent-blue);
     color: #ffffff;
-    border: 1px solid #1d4ed8;
+    border-color: #1d4ed8;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+#app .btn-action:hover:not(:disabled) {
+    background: #1d4ed8;
 }
 
 #app .btn-accent {
     background: var(--accent-teal);
     color: #ffffff;
-    border: 1px solid var(--accent-teal);
+    border-color: var(--accent-teal);
+    box-shadow: 0 2px 4px rgba(13, 148, 136, 0.2);
+}
+
+#app .btn-accent:hover:not(:disabled) {
+    background: var(--accent-teal-hover);
+    border-color: var(--accent-teal-hover);
 }
 
 #app .btn-secondary {
     background: #ffffff;
     color: var(--text-dark);
-    border: 1px solid var(--border-color);
+    border-color: var(--border-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+#app .btn-secondary:hover:not(:disabled) {
+    background: var(--bg-subtle);
+    border-color: #94a3b8;
 }
 
 #app .hidden {
     display: none !important;
+}
+
+/* ── Utility: Section separator inside tab panes ─────────── */
+.pane-section {
+    margin-top: 4px;
 }
