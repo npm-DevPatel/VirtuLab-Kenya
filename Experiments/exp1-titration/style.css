@@ -228,7 +228,7 @@ body:has(#app) {
 
 /* 3. Unified Sidebar (Top Half: Steps | Bottom Half: Tabbed Options) */
 .lab-sidebar {
-    width: 350px;
+    width: 420px;
     height: 100%;
     background: var(--bg-sidebar);
     border-left: 2px solid var(--border-color);
@@ -237,6 +237,12 @@ body:has(#app) {
     flex-shrink: 0;
     z-index: 20;
     transition: margin 0.22s ease;
+}
+
+@media (max-width: 1024px) {
+    .lab-sidebar {
+        width: 380px;
+    }
 }
 
 .workspace.dock-left .lab-sidebar {
@@ -250,18 +256,19 @@ body:has(#app) {
 
 /* TOP HALF: Locked Experiment Steps */
 .sidebar-top-steps {
-    padding: 18px 18px 16px;
+    padding: 20px 22px 18px;
     border-bottom: 2px solid var(--border-color);
     background: #fafaf7;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .step-header-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .step-tag {
@@ -279,13 +286,13 @@ body:has(#app) {
     font-size: 16px;
     font-weight: 700;
     color: var(--text-dark);
-    line-height: 1.25;
+    line-height: 1.35;
 }
 
 .sidebar-top-steps p {
-    font-size: 13px;
+    font-size: 13.5px;
     color: var(--text-body);
-    line-height: 1.48;
+    line-height: 1.52;
 }
 
 .step-actions {
@@ -356,13 +363,13 @@ body:has(#app) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    padding: 10px 6px;
+    gap: 5px;
+    padding: 11px 8px;
     background: transparent;
     border: none;
     border-bottom: 3px solid transparent;
     color: var(--text-muted);
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     border-radius: 0;
@@ -381,7 +388,7 @@ body:has(#app) {
 
 .tab-panels {
     flex: 1;
-    padding: 16px 18px;
+    padding: 18px 22px;
     overflow-y: auto;
 }
 
@@ -408,10 +415,11 @@ body:has(#app) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
     background: var(--bg-subtle);
     border: 1px solid var(--border-color);
     border-radius: 6px;
-    padding: 14px;
+    padding: 16px;
 }
 
 .sub-label {
@@ -593,7 +601,8 @@ body:has(#app) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 12px;
+    gap: 12px;
+    font-size: 12.5px;
     color: var(--text-body);
 }
 
