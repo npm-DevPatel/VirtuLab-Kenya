@@ -1,14 +1,15 @@
-/**
- * bio-2 — Enzyme Activity (Temperature & pH)
- * Experiment effects: placeholder for animations and particle effects.
+﻿/**
+ * BIO-2: Effect of Temperature and pH on Enzyme Activity
+ * Starter FX module. Add animations and particle effects here.
  */
-
 export class ExperimentFx {
-    constructor(/* labScene */) {
-        // TODO: initialize experiment-specific effects
+    constructor(labScene) {
+        this.labScene = labScene;
     }
 
     update() {
-        // TODO: per-frame animation updates
+        // TODO: Add experiment-specific visual effects
     }
+
+    cleanup() {}
 }

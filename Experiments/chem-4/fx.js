@@ -1,14 +1,15 @@
-/**
- * chem-4 — Thermochemistry & Reaction Rates
- * Experiment effects: placeholder for animations and particle effects.
+﻿/**
+ * CHEM-4: Thermochemistry and Rates of Reaction
+ * Starter FX module. Add animations and particle effects here.
  */
-
 export class ExperimentFx {
-    constructor(/* labScene */) {
-        // TODO: initialize experiment-specific effects
+    constructor(labScene) {
+        this.labScene = labScene;
     }
 
     update() {
-        // TODO: per-frame animation updates
+        // TODO: Add experiment-specific visual effects
     }
+
+    cleanup() {}
 }

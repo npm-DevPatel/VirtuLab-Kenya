@@ -1,14 +1,15 @@
-/**
- * phys-4 — Mechanics: Hooke's Law (Spring Constant)
- * Experiment effects: placeholder for animations and particle effects.
+﻿/**
+ * PHYS-4: Hooke's Law and Spring Constant
+ * Starter FX module. Add animations and particle effects here.
  */
-
 export class ExperimentFx {
-    constructor(/* labScene */) {
-        // TODO: initialize experiment-specific effects
+    constructor(labScene) {
+        this.labScene = labScene;
     }
 
     update() {
-        // TODO: per-frame animation updates
+        // TODO: Add experiment-specific visual effects
     }
+
+    cleanup() {}
 }

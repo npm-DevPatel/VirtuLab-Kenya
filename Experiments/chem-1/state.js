@@ -1,8 +1,3 @@
-/**
- * chem-1 / Titration State  (re-exported from original titrationState)
- * Kept as a direct copy so the module lives at Experiments/chem-1/state.js
- */
-
 export const STEPS = [
     {
         index: 1,
@@ -40,27 +35,27 @@ export const STEPS = [
     },
 ];
 
-export class ExperimentState {
+export class TitrationState {
     constructor() {
         this.reset();
     }
 
     reset() {
         this.currentStep = 1;
-        this.buretteVolume = 0.0;
-        this.flaskVolume = 0.0;
+        this.buretteVolume = 0.0; // cm³ of HCl dispensed (0.00 to 50.00)
+        this.flaskVolume = 0.0;   // Starts empty until pipetted in Step 1!
         this.maxVolume = 50.0;
-        this.targetEndpoint = 24.8;
-        this.tolerance = 0.15;
+        this.targetEndpoint = 24.8; // Exact neutralization volume
+        this.tolerance = 0.15;      // KCSE concordant range: 24.65 - 24.95 cm³
         this.indicatorAdded = false;
-        this.liquidColorHex = 0x7dd3fc;
-        this.status = 'NEUTRAL';
+        this.liquidColorHex = 0x7dd3fc; // Clear sky-tinted alkali before indicator
+        this.status = 'NEUTRAL'; // NEUTRAL | ALKALINE | NEAR_ENDPOINT | ENDPOINT | OVERSHOT
     }
 
     confirmStep1() {
         if (this.currentStep === 1) {
             this.flaskVolume = 25.0;
-            this.liquidColorHex = 0xbae6fd;
+            this.liquidColorHex = 0xbae6fd; // Visible clear aqueous solution
             this.currentStep = 2;
         }
         return this.getSnapshot();
@@ -69,7 +64,7 @@ export class ExperimentState {
     addIndicator() {
         if (this.currentStep === 2) {
             this.indicatorAdded = true;
-            this.liquidColorHex = 0xe11d74;
+            this.liquidColorHex = 0xe11d74; // Deep, high-contrast phenolphthalein magenta
             this.status = 'ALKALINE';
             this.currentStep = 3;
         }
@@ -95,19 +90,19 @@ export class ExperimentState {
         const diff = this.targetEndpoint - this.buretteVolume;
 
         if (diff > 1.3) {
-            this.liquidColorHex = 0xe11d74;
+            this.liquidColorHex = 0xe11d74; // Vibrant magenta
             this.status = 'ALKALINE';
         } else if (diff > 0.45) {
-            this.liquidColorHex = 0xf472b6;
+            this.liquidColorHex = 0xf472b6; // Medium rose pink
             this.status = 'NEAR_ENDPOINT';
         } else if (diff > this.tolerance) {
-            this.liquidColorHex = 0xfbcfe8;
+            this.liquidColorHex = 0xfbcfe8; // Very pale pink (1-2 drops away)
             this.status = 'NEAR_ENDPOINT';
         } else if (Math.abs(diff) <= this.tolerance) {
-            this.liquidColorHex = 0xdbeafe;
+            this.liquidColorHex = 0xdbeafe; // Crisp water-clear neutralized solution
             this.status = 'ENDPOINT';
         } else {
-            this.liquidColorHex = 0xdbeafe;
+            this.liquidColorHex = 0xdbeafe; // Colorless in excess acid
             this.status = 'OVERSHOT';
         }
 
@@ -147,5 +142,5 @@ export class ExperimentState {
     }
 }
 
-/** Backward-compatible alias */
-export const TitrationState = ExperimentState;
+// Universal alias so LabShell can import ExperimentState from any experiment folder
+export { TitrationState as ExperimentState };

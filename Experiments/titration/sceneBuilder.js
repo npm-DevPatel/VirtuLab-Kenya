@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { buildLabRoomAndBench } from './labEnvironment.js';
+import { buildLabRoomAndBench } from '../shared/labEnvironment.js';
 
 function createBuretteScaleTexture() {
     const canvas = document.createElement('canvas');
@@ -571,5 +571,6 @@ export function createLabScene(container) {
         setCameraPreset,
         updateCamera,
         dispose,
+        cleanup: dispose,
     };
 }

@@ -258,3 +258,6 @@ export class DropletFx {
         }
     }
 }
+
+// Universal alias so LabShell can import ExperimentFx from any experiment folder
+export { DropletFx as ExperimentFx };

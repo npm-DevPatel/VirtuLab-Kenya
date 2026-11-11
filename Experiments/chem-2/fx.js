@@ -1,14 +1,16 @@
 /**
- * chem-2 — Qualitative Analysis: Inorganic
- * Experiment effects: placeholder for animations and particle effects.
+ * CHEM-2: Qualitative Analysis — Cations & Anions
+ * Starter FX module. Add particle effects, colour transitions, precipitate animations here.
  */
-
 export class ExperimentFx {
-    constructor(/* labScene */) {
-        // TODO: initialize experiment-specific effects
+    constructor(labScene) {
+        this.labScene = labScene;
     }
 
     update() {
-        // TODO: per-frame animation updates
+        // TODO: Animate precipitate formation, colour changes, etc.
     }
+
+    cleanup() {}
 }
+

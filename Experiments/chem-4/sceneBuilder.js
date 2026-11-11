@@ -1,12 +1,12 @@
-/**
- * chem-4 — Thermochemistry & Reaction Rates
- * Starter sceneBuilder: sets up the 3D lab room, camera, controls, lights.
- * Paste custom apparatus code below the buildLabRoomAndBench() call.
- */
-import * as THREE from 'three';
+﻿import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { buildLabRoomAndBench } from '../shared/labEnvironment.js';
 
+/**
+ * CHEM-4: Thermochemistry and Rates of Reaction
+ * Starter scene: shared lab room + workbench ready for custom apparatus.
+ * TODO: Replace placeholder with real apparatus code.
+ */
 export function createLabScene(container) {
     const width = container.clientWidth || window.innerWidth;
     const height = container.clientHeight || window.innerHeight - 54;
@@ -37,29 +37,37 @@ export function createLabScene(container) {
 
     let cameraTransition = null;
 
-    // Lighting
     const hemiLight = new THREE.HemisphereLight(0xffffff, 0xd6d3cd, 1.15);
     scene.add(hemiLight);
-
     const keyLight = new THREE.DirectionalLight(0xfffef8, 1.25);
     keyLight.position.set(2.2, 4.2, 3.2);
     keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width = 2048;
-    keyLight.shadow.mapSize.height = 2048;
+    keyLight.shadow.mapSize.set(2048, 2048);
     keyLight.shadow.bias = -0.0005;
     scene.add(keyLight);
+    const fillLight = new THREE.DirectionalLight(0xe0f2fe, 0.55);
+    fillLight.position.set(-3.2, 2.2, 1.0);
+    scene.add(fillLight);
 
-    const windowFillLight = new THREE.DirectionalLight(0xe0f2fe, 0.55);
-    windowFillLight.position.set(-3.2, 2.2, 1.0);
-    scene.add(windowFillLight);
+    // ── PLACEHOLDER APPARATUS ─────────────────────────────────────────────
+    // TODO: Replace with CHEM-4 apparatus:
+    //   – Polystyrene calorimeter cup + thermometer
+    //   - Weighing boat + balance
+    //   - Conical flask over paper with ink-X
+    //   - Stopwatch on bench
+    // ─────────────────────────────────────────────────────────────────────
+    const placeholderMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.5 });
+    const placeholder = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.1, 0.1), placeholderMat);
+    placeholder.position.set(0, 0.55, 0);
+    placeholder.castShadow = true;
+    scene.add(placeholder);
 
-    // ── TODO: Paste custom 3D apparatus for this experiment below ──
-    // e.g. test tubes, reagent bottles, spotting tile, etc.
-
-    const labelAnchors = [];
+    const labelAnchors = [
+        { id: 'placeholder', title: 'CHEM-4 — Thermochemistry and Rates of Reaction', sub: 'Paste apparatus code here', pos: new THREE.Vector3(0.1, 0.72, 0) },
+    ];
 
     function syncWithState(snapshot) {
-        // TODO: update 3D apparatus visuals based on experiment state
+        // TODO: wire visual state to experiment snapshot
     }
 
     function setCameraPreset(presetName) {
@@ -67,18 +75,18 @@ export function createLabScene(container) {
         if (presetName === 'bench') {
             targetPos = new THREE.Vector3(0.15, 1.38, 2.55);
             targetLook = new THREE.Vector3(0, 1.02, 0);
+        } else if (presetName === 'flask') {
+            targetPos = new THREE.Vector3(0, 0.86, 0.92);
+            targetLook = new THREE.Vector3(0, 0.66, 0);
         }
-        if (targetPos && targetLook) {
-            cameraTransition = { targetPos, targetLook, framesLeft: 38 };
-        }
+        if (targetPos) cameraTransition = { targetPos, targetLook, framesLeft: 38 };
     }
 
     function updateCamera() {
         if (cameraTransition) {
             camera.position.lerp(cameraTransition.targetPos, 0.12);
             controls.target.lerp(cameraTransition.targetLook, 0.12);
-            cameraTransition.framesLeft--;
-            if (cameraTransition.framesLeft <= 0) cameraTransition = null;
+            if (--cameraTransition.framesLeft <= 0) cameraTransition = null;
         }
         controls.update();
     }
@@ -94,17 +102,10 @@ export function createLabScene(container) {
 
     function cleanup() {
         window.removeEventListener('resize', handleResize);
-        if (controls && controls.dispose) controls.dispose();
-        if (renderer) {
-            renderer.dispose();
-            if (renderer.domElement && renderer.domElement.parentNode) {
-                renderer.domElement.parentNode.removeChild(renderer.domElement);
-            }
-        }
+        controls.dispose();
+        renderer.dispose();
+        renderer.domElement?.parentNode?.removeChild(renderer.domElement);
     }
 
-    return {
-        scene, camera, renderer, controls,
-        labelAnchors, syncWithState, setCameraPreset, updateCamera, cleanup,
-    };
+    return { scene, camera, renderer, controls, labelAnchors, syncWithState, setCameraPreset, updateCamera, cleanup };
 }

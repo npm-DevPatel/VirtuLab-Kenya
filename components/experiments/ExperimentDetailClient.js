@@ -8,8 +8,12 @@ import SiteNav from '@/components/Nav';
 import { useAuth } from '@/components/AuthProvider';
 import styles from '@/app/experiments/[id]/detail.module.css';
 
-const Exp1Titration = dynamic(
-  () => import('@/components/experiments/Exp1Titration'),
+/**
+ * Universal Lab Shell — dynamically loaded (no SSR) for all 12 experiments.
+ * The shell itself handles the per-experiment module imports internally.
+ */
+const LabShell = dynamic(
+  () => import('@/components/experiments/LabShell'),
   {
     ssr: false,
     loading: () => (
@@ -29,12 +33,18 @@ const Exp1Titration = dynamic(
         }}
       >
         <p style={{ fontSize: '18px', fontWeight: 500 }}>
-          Loading 3D Chemistry Laboratory...
+          Loading 3D Virtual Laboratory…
         </p>
       </div>
     ),
   }
 );
+
+const subjectLabel = {
+  Chemistry: 'Chemistry Laboratory',
+  Physics:   'Physics Laboratory',
+  Biology:   'Biology Laboratory',
+};
 
 export default function ExperimentDetailClient({ exp, subjectTagClass, subjectSlug }) {
   const { user, loading: authLoading } = useAuth();
@@ -48,7 +58,9 @@ export default function ExperimentDetailClient({ exp, subjectTagClass, subjectSl
   const [closedByStudent, setClosedByStudent] = useState(false);
 
   const shouldOpenLab = (isLabRequested && !closedByStudent) || manuallyOpened;
-  const isLabActive = Boolean(shouldOpenLab && user && exp.hasInteractiveSim && exp.id === 'titration');
+
+  // All 12 experiments now launch the universal LabShell when user is logged in.
+  const isLabActive = Boolean(shouldOpenLab && user);
   const showLockedPrompt = Boolean(shouldOpenLab && !user && !authLoading);
 
   function handleLaunchClick() {
@@ -68,9 +80,9 @@ export default function ExperimentDetailClient({ exp, subjectTagClass, subjectSl
     }
   }
 
-  // Active full-screen 3D simulation view
+  // Active full-screen 3D lab view
   if (isLabActive) {
-    return <Exp1Titration onExit={handleExitLab} />;
+    return <LabShell experiment={exp} onExit={handleExitLab} />;
   }
 
   return (
@@ -98,7 +110,7 @@ export default function ExperimentDetailClient({ exp, subjectTagClass, subjectSl
             <p className={styles.description}>{exp.description}</p>
           </header>
 
-          {/* Locked Alert if unauthorized launch attempt made */}
+          {/* Locked Alert if unauthorized launch attempt was made */}
           {showLockedPrompt && (
             <div className={styles.lockedCard} role="alert">
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -123,65 +135,54 @@ export default function ExperimentDetailClient({ exp, subjectTagClass, subjectSl
             </div>
           )}
 
-          {/* Interactive Lab or Development Status */}
-          {exp.hasInteractiveSim && exp.id === 'titration' ? (
-            <div className={styles.readyBlock} role="region" aria-label="Interactive 3D Simulation">
-              <div className={styles.readyBadgeRow}>
-                <span className={styles.readyBadge}>
-                  <span className={styles.readyBadgeDot} /> 3D Virtual Lab Active
-                </span>
-                <span className="mono-small" style={{ color: 'var(--accent)', fontWeight: 600 }}>
-                  KCSE 233/3
-                </span>
-              </div>
-
-              <div>
-                <h2 className={styles.readyHeading}>Volumetric Analysis 3D Simulation</h2>
-                <p className={styles.readyText} style={{ marginTop: '8px' }}>
-                  A full virtual laboratory bench featuring 3D apparatus, calibrated burette with
-                  live meniscus zoom loupe, volumetric pipette transfer, and phenolphthalein end-point
-                  titration reactions.
-                </p>
-              </div>
-
-              <div className={styles.readyActions}>
-                {user ? (
-                  <button
-                    type="button"
-                    onClick={handleLaunchClick}
-                    className="btn btn-primary"
-                    style={{ fontSize: '16px', padding: '12px 24px' }}
-                  >
-                    Launch 3D Virtual Lab →
-                  </button>
-                ) : (
-                  <>
-                    <Link
-                      href={`/login?redirect=/experiments/${exp.id}?lab=true`}
-                      className="btn btn-primary"
-                      style={{ fontSize: '15px', padding: '10px 20px' }}
-                    >
-                      🔒 Log in to Launch 3D Lab
-                    </Link>
-                    <span className={styles.lockedNotice}>
-                      Account required to record results and perform practical
-                    </span>
-                  </>
-                )}
-              </div>
+          {/* Interactive 3D Lab Launch Block — available for ALL experiments */}
+          <div className={styles.readyBlock} role="region" aria-label="Interactive 3D Simulation">
+            <div className={styles.readyBadgeRow}>
+              <span className={styles.readyBadge}>
+                <span className={styles.readyBadgeDot} /> 3D Virtual Lab Ready
+              </span>
+              <span className="mono-small" style={{ color: 'var(--accent)', fontWeight: 600 }}>
+                {exp.subject} Practical
+              </span>
             </div>
-          ) : (
-            /* Development status block for remaining experiments */
-            <div className={styles.statusBlock} role="note" aria-label="Development status">
-              <p className={`mono-small ${styles.statusLabel}`}>STATUS</p>
-              <h2 className={styles.statusHeading}>This lab is in development.</h2>
-              <p className={styles.statusText}>
-                When complete, this will be a guided, step-by-step 3D simulation of the
-                real {exp.subject.toLowerCase()} practical. For now, you can read exactly
-                what the simulation will cover below.
+
+            <div>
+              <h2 className={styles.readyHeading}>
+                {exp.title} — 3D Simulation
+              </h2>
+              <p className={styles.readyText} style={{ marginTop: '8px' }}>
+                A guided, step-by-step 3D virtual {subjectLabel[exp.subject] ?? 'laboratory'}.
+                Walk through the KCSE procedure with interactive apparatus on a shared Kenyan
+                school laboratory bench.
               </p>
             </div>
-          )}
+
+            <div className={styles.readyActions}>
+              {user ? (
+                <button
+                  type="button"
+                  onClick={handleLaunchClick}
+                  className="btn btn-primary"
+                  style={{ fontSize: '16px', padding: '12px 24px' }}
+                >
+                  Launch 3D Virtual Lab →
+                </button>
+              ) : (
+                <>
+                  <Link
+                    href={`/login?redirect=/experiments/${exp.id}?lab=true`}
+                    className="btn btn-primary"
+                    style={{ fontSize: '15px', padding: '10px 20px' }}
+                  >
+                    🔒 Log in to Launch 3D Lab
+                  </Link>
+                  <span className={styles.lockedNotice}>
+                    Account required to record results and perform practical
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
 
           {/* What you'll do */}
           <section className={styles.procedureSection} aria-labelledby="procedure-heading">

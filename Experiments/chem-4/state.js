@@ -1,38 +1,39 @@
-/**
- * chem-4 — Thermochemistry & Reaction Rates
- * Experiment state manager: tracks heat-of-solution and disappearing-cross steps.
+﻿/**
+ * CHEM-4: Thermochemistry and Rates of Reaction
+ * Starter experiment state. Steps are pulled live from lib/experiments.js.
  */
+import { experiments } from '@/lib/experiments.js';
 
-const STEPS = [
-    { index: 1, tag: 'STEP 1 OF 7', title: 'Record initial water temperature', instruction: 'Record the initial temperature of 100 cm³ of distilled water in a polystyrene cup.' },
-    { index: 2, tag: 'STEP 2 OF 7', title: 'Weigh and add solute', instruction: 'Weigh a measured mass of the solute (e.g. anhydrous sodium chloride or potassium nitrate); add it to the water and stir.' },
-    { index: 3, tag: 'STEP 3 OF 7', title: 'Record final temperature and calculate ΔH', instruction: 'Record the maximum or minimum temperature reached; calculate ΔT and then ΔH using Q = mcΔT.' },
-    { index: 4, tag: 'STEP 4 OF 7', title: 'Draw X on paper, place flask', instruction: 'Draw a bold X on paper; place a conical flask over it.' },
-    { index: 5, tag: 'STEP 5 OF 7', title: 'Add Na₂S₂O₃ and HCl, start timer', instruction: 'Measure 50 cm³ of sodium thiosulphate solution into the flask; add a measured volume of dilute HCl and immediately start the stopwatch.' },
-    { index: 6, tag: 'STEP 6 OF 7', title: 'Time until cross disappears', instruction: 'Look down through the flask; stop the timer when the cross is no longer visible through the cloudy precipitate.' },
-    { index: 7, tag: 'STEP 7 OF 7', title: 'Plot rate vs variable', instruction: 'Repeat at different concentrations (or temperatures) and plot rate (1/time) against the variable to show the relationship.' },
-];
+const exp = experiments.find(e => e.id === 'thermochemistry');
+
+const STEPS = (exp?.procedure || []).map((instruction, i) => ({
+    index: i + 1,
+    tag: `STEP ${i + 1} OF ${exp.procedure.length}`,
+    title: `Step ${i + 1}`,
+    instruction,
+}));
 
 export class ExperimentState {
-    constructor() { this.reset(); }
+    constructor() {
+        this.reset();
+    }
 
     reset() {
         this.currentStep = 1;
-        this.status = 'IN_PROGRESS';
+        this.status = 'READY';
     }
 
-    advanceStep() {
-        if (this.currentStep < STEPS.length) {
-            this.currentStep++;
-            if (this.currentStep === STEPS.length) this.status = 'COMPLETE';
-        }
+    nextStep() {
+        if (this.currentStep < STEPS.length) this.currentStep++;
         return this.getSnapshot();
     }
 
     getSnapshot() {
+        const stepMeta = { ...STEPS[this.currentStep - 1] };
         return {
             currentStep: this.currentStep,
-            stepMeta: { ...STEPS[this.currentStep - 1] },
+            totalSteps: STEPS.length,
+            stepMeta,
             status: this.status,
         };
     }

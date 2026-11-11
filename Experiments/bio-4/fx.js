@@ -1,14 +1,15 @@
-/**
- * bio-4 — Dichotomous Keys & Specimen Identification
- * Experiment effects: placeholder for animations and particle effects.
+﻿/**
+ * BIO-4: Dichotomous Keys and Specimen Identification
+ * Starter FX module. Add animations and particle effects here.
  */
-
 export class ExperimentFx {
-    constructor(/* labScene */) {
-        // TODO: initialize experiment-specific effects
+    constructor(labScene) {
+        this.labScene = labScene;
     }
 
     update() {
-        // TODO: per-frame animation updates
+        // TODO: Add experiment-specific visual effects
     }
+
+    cleanup() {}
 }

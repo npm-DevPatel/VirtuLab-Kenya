@@ -1,9 +1,11 @@
 /* ==========================================================================
-   VIRTULAB KENYA — UNIFIED 3D EXPERIMENT SHELL STYLES
-   Scoped under .lab-shell-root (also aliased as .exp1-root for backward compat) so Next.js globals.css never strips padding!
+   VIRTULAB KENYA â€” UNIFIED 3D EXPERIMENT SHELL STYLES
+   Scoped under .lab-shell-root (universal) and .exp1-root (chem-1 alias).
+   Both selectors share identical rules so the UI is identical for all 12 labs.
    ========================================================================== */
 
-:is(.lab-shell-root, .exp1-root) {
+.lab-shell-root,
+.exp1-root {
     --lab-header-bg: #11161d;
     --lab-header-border: #222b38;
     --lab-paper: #f7f5f0;
@@ -38,7 +40,8 @@
 /* ==========================================================================
    1. TOP NAVIGATION BAR
    ========================================================================== */
-:is(.lab-shell-root, .exp1-root) .lab-header {
+.lab-shell-root .lab-header,
+.exp1-root .lab-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,13 +54,15 @@
     z-index: 30;
 }
 
-:is(.lab-shell-root, .exp1-root) .header-left {
+.lab-shell-root .header-left,
+.exp1-root .header-left{
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-exit {
+.lab-shell-root .btn-exit,
+.exp1-root .btn-exit{
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -73,19 +78,22 @@
     transition: all 0.15s ease;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-exit:hover {
+.lab-shell-root .btn-exit:hover,
+.exp1-root .btn-exit:hover{
     background: rgba(255, 255, 255, 0.14);
     color: #ffffff;
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-:is(.lab-shell-root, .exp1-root) .header-divider {
+.lab-shell-root .header-divider,
+.exp1-root .header-divider{
     width: 1px;
     height: 22px;
     background: rgba(255, 255, 255, 0.14);
 }
 
-:is(.lab-shell-root, .exp1-root) .badge {
+.lab-shell-root .badge,
+.exp1-root .badge{
     font-family: var(--font-mono, 'IBM Plex Mono', monospace);
     font-size: 11px;
     font-weight: 600;
@@ -97,7 +105,8 @@
     border-radius: 4px;
 }
 
-:is(.lab-shell-root, .exp1-root) .lab-header h1 {
+.lab-shell-root .lab-header h1,
+.exp1-root .lab-header h1{
     font-family: var(--font-display, 'Fraunces', Georgia, serif);
     font-size: 16.5px;
     font-weight: 600;
@@ -106,13 +115,15 @@
     margin: 0 !important;
 }
 
-:is(.lab-shell-root, .exp1-root) .header-right {
+.lab-shell-root .header-right,
+.exp1-root .header-right{
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-nav-tool {
+.lab-shell-root .btn-nav-tool,
+.exp1-root .btn-nav-tool{
     display: inline-flex;
     align-items: center;
     gap: 7px;
@@ -127,26 +138,30 @@
     transition: all 0.15s ease;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-nav-tool:hover {
+.lab-shell-root .btn-nav-tool:hover,
+.exp1-root .btn-nav-tool:hover{
     background: rgba(255, 255, 255, 0.12);
     color: #ffffff;
     border-color: rgba(255, 255, 255, 0.28);
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-nav-tool.active {
+.lab-shell-root .btn-nav-tool.active,
+.exp1-root .btn-nav-tool.active{
     background: rgba(20, 184, 166, 0.2);
     border-color: #2dd4bf;
     color: #ffffff;
 }
 
-:is(.lab-shell-root, .exp1-root) .dot-indicator {
+.lab-shell-root .dot-indicator,
+.exp1-root .dot-indicator{
     width: 7px;
     height: 7px;
     border-radius: 50%;
     background: #64748b;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-nav-tool.active .dot-indicator {
+.lab-shell-root .btn-nav-tool.active .dot-indicator,
+.exp1-root .btn-nav-tool.active .dot-indicator{
     background: #2dd4bf;
     box-shadow: 0 0 6px #2dd4bf;
 }
@@ -154,7 +169,8 @@
 /* ==========================================================================
    2. MAIN WORKSPACE & 3D VIEWPORT
    ========================================================================== */
-:is(.lab-shell-root, .exp1-root) .workspace {
+.lab-shell-root .workspace,
+.exp1-root .workspace{
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -162,11 +178,13 @@
     overflow: hidden;
 }
 
-:is(.lab-shell-root, .exp1-root) .workspace.dock-left {
+.lab-shell-root .workspace.dock-left,
+.exp1-root .workspace.dock-left{
     flex-direction: row-reverse;
 }
 
-:is(.lab-shell-root, .exp1-root) .canvas-stage {
+.lab-shell-root .canvas-stage,
+.exp1-root .canvas-stage{
     flex: 1;
     position: relative;
     height: 100%;
@@ -174,19 +192,22 @@
     overflow: hidden;
 }
 
-:is(.lab-shell-root, .exp1-root) .canvas-stage canvas {
+.lab-shell-root .canvas-stage canvas,
+.exp1-root .canvas-stage canvas{
     display: block;
     width: 100%;
     height: 100%;
     cursor: grab;
 }
 
-:is(.lab-shell-root, .exp1-root) .canvas-stage canvas:active {
+.lab-shell-root .canvas-stage canvas:active,
+.exp1-root .canvas-stage canvas:active{
     cursor: grabbing;
 }
 
 /* Floating Collapse / Expand Pill */
-:is(.lab-shell-root, .exp1-root) .sidebar-toggle-fab {
+.lab-shell-root .sidebar-toggle-fab,
+.exp1-root .sidebar-toggle-fab{
     position: absolute;
     top: 16px;
     right: 16px;
@@ -207,29 +228,34 @@
     transition: all 0.15s ease;
 }
 
-:is(.lab-shell-root, .exp1-root) .sidebar-toggle-fab:hover {
+.lab-shell-root .sidebar-toggle-fab:hover,
+.exp1-root .sidebar-toggle-fab:hover{
     background: #11161d;
     transform: translateY(-1px);
 }
 
-:is(.lab-shell-root, .exp1-root) .workspace.dock-left .sidebar-toggle-fab {
+.lab-shell-root .workspace.dock-left .sidebar-toggle-fab,
+.exp1-root .workspace.dock-left .sidebar-toggle-fab{
     right: auto;
     left: 16px;
 }
 
 /* 3D Floating Apparatus Labels */
-:is(.lab-shell-root, .exp1-root) .labels-layer {
+.lab-shell-root .labels-layer,
+.exp1-root .labels-layer{
     position: absolute;
     inset: 0;
     pointer-events: none;
     z-index: 5;
 }
 
-:is(.lab-shell-root, .exp1-root) .labels-layer.hidden {
+.lab-shell-root .labels-layer.hidden,
+.exp1-root .labels-layer.hidden{
     display: none;
 }
 
-:is(.lab-shell-root, .exp1-root) .lab-label {
+.lab-shell-root .lab-label,
+.exp1-root .lab-label{
     position: absolute;
     transform: translate(-50%, -50%);
     background: rgba(17, 22, 29, 0.9);
@@ -245,7 +271,8 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-:is(.lab-shell-root, .exp1-root) .lab-label small {
+.lab-shell-root .lab-label small,
+.exp1-root .lab-label small{
     display: block;
     font-family: var(--font-mono, monospace);
     font-size: 10px;
@@ -257,7 +284,8 @@
 /* ==========================================================================
    3. UNIFIED SIDEBAR (CLEAN, PADDED, SCIENTIFIC NOTEBOOK DESIGN)
    ========================================================================== */
-:is(.lab-shell-root, .exp1-root) .lab-sidebar {
+.lab-shell-root .lab-sidebar,
+.exp1-root .lab-sidebar{
     width: 390px;
     height: 100%;
     background: var(--lab-paper);
@@ -269,18 +297,21 @@
     box-shadow: -4px 0 24px rgba(0, 0, 0, 0.06);
 }
 
-:is(.lab-shell-root, .exp1-root) .workspace.dock-left .lab-sidebar {
+.lab-shell-root .workspace.dock-left .lab-sidebar,
+.exp1-root .workspace.dock-left .lab-sidebar{
     border-left: none;
     border-right: 1px solid var(--lab-border-strong);
     box-shadow: 4px 0 24px rgba(0, 0, 0, 0.06);
 }
 
-:is(.lab-shell-root, .exp1-root) .lab-sidebar.collapsed {
+.lab-shell-root .lab-sidebar.collapsed,
+.exp1-root .lab-sidebar.collapsed{
     display: none;
 }
 
 /* TOP HALF: Active Step Card */
-:is(.lab-shell-root, .exp1-root) .sidebar-top-steps {
+.lab-shell-root .sidebar-top-steps,
+.exp1-root .sidebar-top-steps{
     padding: 22px 22px 20px !important;
     background: var(--lab-surface);
     border-bottom: 1px solid var(--lab-border);
@@ -289,14 +320,16 @@
     gap: 12px;
 }
 
-:is(.lab-shell-root, .exp1-root) .step-header-row {
+.lab-shell-root .step-header-row,
+.exp1-root .step-header-row{
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 8px;
 }
 
-:is(.lab-shell-root, .exp1-root) .step-tag {
+.lab-shell-root .step-tag,
+.exp1-root .step-tag{
     font-family: var(--font-mono, monospace);
     font-size: 11px;
     font-weight: 600;
@@ -308,7 +341,8 @@
     border-radius: 4px;
 }
 
-:is(.lab-shell-root, .exp1-root) .status-pill {
+.lab-shell-root .status-pill,
+.exp1-root .status-pill{
     font-family: var(--font-mono, monospace);
     font-size: 11px;
     font-weight: 600;
@@ -316,31 +350,36 @@
     border-radius: 4px;
 }
 
-:is(.lab-shell-root, .exp1-root) .status-neutral {
+.lab-shell-root .status-neutral,
+.exp1-root .status-neutral{
     background: var(--lab-subtle);
     color: var(--lab-ink-secondary);
     border: 1px solid var(--lab-border);
 }
 
-:is(.lab-shell-root, .exp1-root) .status-alkaline {
+.lab-shell-root .status-alkaline,
+.exp1-root .status-alkaline{
     background: #fdf2f8;
     color: #be185d;
     border: 1px solid #fbcfe8;
 }
 
-:is(.lab-shell-root, .exp1-root) .status-endpoint {
+.lab-shell-root .status-endpoint,
+.exp1-root .status-endpoint{
     background: #ecfdf5;
     color: #047857;
     border: 1px solid #a7f3d0;
 }
 
-:is(.lab-shell-root, .exp1-root) .status-overshot {
+.lab-shell-root .status-overshot,
+.exp1-root .status-overshot{
     background: #fef2f2;
     color: #b91c1c;
     border: 1px solid #fecaca;
 }
 
-:is(.lab-shell-root, .exp1-root) .sidebar-top-steps h2 {
+.lab-shell-root .sidebar-top-steps h2,
+.exp1-root .sidebar-top-steps h2{
     font-family: var(--font-display, 'Fraunces', Georgia, serif);
     font-size: 18px;
     font-weight: 600;
@@ -349,22 +388,28 @@
     margin: 2px 0 0 !important;
 }
 
-:is(.lab-shell-root, .exp1-root) .sidebar-top-steps p {
+.lab-shell-root .sidebar-top-steps p,
+.exp1-root .sidebar-top-steps p{
     font-size: 13.5px;
     color: var(--lab-ink-secondary);
     line-height: 1.55;
     margin: 0 !important;
 }
 
-:is(.lab-shell-root, .exp1-root) .step-actions {
+.lab-shell-root .step-actions,
+.exp1-root .step-actions{
     margin-top: 6px;
 }
 
 /* Primary & Secondary Action Buttons */
-:is(.lab-shell-root, .exp1-root) .btn-primary,
-:is(.lab-shell-root, .exp1-root) .btn-action,
-:is(.lab-shell-root, .exp1-root) .btn-accent,
-:is(.lab-shell-root, .exp1-root) .btn-secondary {
+.lab-shell-root .btn-primary,
+.exp1-root .btn-primary,
+.lab-shell-root .btn-action,
+.exp1-root .btn-action,
+.lab-shell-root .btn-accent,
+.exp1-root .btn-accent,
+.lab-shell-root .btn-secondary,
+.exp1-root .btn-secondary{
     font-family: var(--font-sans, sans-serif);
     font-size: 13.5px;
     font-weight: 600;
@@ -378,62 +423,74 @@
     gap: 8px;
 }
 
-:is(.lab-shell-root, .exp1-root) .full-width {
+.lab-shell-root .full-width,
+.exp1-root .full-width{
     width: 100%;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-primary {
+.lab-shell-root .btn-primary,
+.exp1-root .btn-primary{
     background: var(--lab-accent);
     color: #ffffff;
     border: 1px solid var(--lab-accent);
     box-shadow: 0 2px 5px rgba(15, 82, 87, 0.2);
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-primary:hover:not(:disabled) {
+.lab-shell-root .btn-primary:hover:not(:disabled),
+.exp1-root .btn-primary:hover:not(:disabled){
     background: var(--lab-accent-hover);
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-pink {
+.lab-shell-root .btn-pink,
+.exp1-root .btn-pink{
     background: var(--lab-pink);
     border-color: var(--lab-pink);
     box-shadow: 0 2px 5px rgba(190, 24, 93, 0.2);
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-pink:hover:not(:disabled) {
+.lab-shell-root .btn-pink:hover:not(:disabled),
+.exp1-root .btn-pink:hover:not(:disabled){
     background: #9d174d;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-action {
+.lab-shell-root .btn-action,
+.exp1-root .btn-action{
     background: var(--lab-blue);
     color: #ffffff;
     border: 1px solid var(--lab-blue);
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-action:hover:not(:disabled) {
+.lab-shell-root .btn-action:hover:not(:disabled),
+.exp1-root .btn-action:hover:not(:disabled){
     background: #1e40af;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-accent {
+.lab-shell-root .btn-accent,
+.exp1-root .btn-accent{
     background: #0d9488;
     color: #ffffff;
     border: 1px solid #0d9488;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-accent:hover:not(:disabled) {
+.lab-shell-root .btn-accent:hover:not(:disabled),
+.exp1-root .btn-accent:hover:not(:disabled){
     background: #0f766e;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-secondary {
+.lab-shell-root .btn-secondary,
+.exp1-root .btn-secondary{
     background: var(--lab-surface);
     color: var(--lab-ink);
     border: 1px solid var(--lab-border-strong);
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-secondary:hover:not(:disabled) {
+.lab-shell-root .btn-secondary:hover:not(:disabled),
+.exp1-root .btn-secondary:hover:not(:disabled){
     background: var(--lab-subtle);
 }
 
-:is(.lab-shell-root, .exp1-root) .titration-grid {
+.lab-shell-root .titration-grid,
+.exp1-root .titration-grid{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
@@ -442,7 +499,8 @@
 /* ==========================================================================
    4. BOTTOM HALF: SEGMENTED ICON TABS & PANELS
    ========================================================================== */
-:is(.lab-shell-root, .exp1-root) .sidebar-bottom-tabs {
+.lab-shell-root .sidebar-bottom-tabs,
+.exp1-root .sidebar-bottom-tabs{
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -450,7 +508,8 @@
     background: var(--lab-paper);
 }
 
-:is(.lab-shell-root, .exp1-root) .tab-icon-bar {
+.lab-shell-root .tab-icon-bar,
+.exp1-root .tab-icon-bar{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 6px;
@@ -460,7 +519,8 @@
     flex-shrink: 0;
 }
 
-:is(.lab-shell-root, .exp1-root) .tab-btn {
+.lab-shell-root .tab-btn,
+.exp1-root .tab-btn{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -477,34 +537,40 @@
     transition: all 0.15s ease;
 }
 
-:is(.lab-shell-root, .exp1-root) .tab-btn:hover {
+.lab-shell-root .tab-btn:hover,
+.exp1-root .tab-btn:hover{
     color: var(--lab-ink);
     background: #e6e2da;
 }
 
-:is(.lab-shell-root, .exp1-root) .tab-btn.active {
+.lab-shell-root .tab-btn.active,
+.exp1-root .tab-btn.active{
     background: var(--lab-surface);
     color: var(--lab-accent);
     border-color: var(--lab-border);
     box-shadow: 0 2px 0 var(--lab-surface);
 }
 
-:is(.lab-shell-root, .exp1-root) .tab-panels {
+.lab-shell-root .tab-panels,
+.exp1-root .tab-panels{
     flex: 1;
     padding: 20px 22px !important;
     background: var(--lab-surface);
     overflow-y: auto;
 }
 
-:is(.lab-shell-root, .exp1-root) .tab-pane {
+.lab-shell-root .tab-pane,
+.exp1-root .tab-pane{
     display: none;
 }
 
-:is(.lab-shell-root, .exp1-root) .tab-pane.active {
+.lab-shell-root .tab-pane.active,
+.exp1-root .tab-pane.active{
     display: block;
 }
 
-:is(.lab-shell-root, .exp1-root) .pane-title {
+.lab-shell-root .pane-title,
+.exp1-root .pane-title{
     font-family: var(--font-mono, monospace);
     font-size: 11px;
     font-weight: 600;
@@ -515,7 +581,8 @@
 }
 
 /* TAB 1: Burette Readout Card & Meniscus Loupe */
-:is(.lab-shell-root, .exp1-root) .burette-widget {
+.lab-shell-root .burette-widget,
+.exp1-root .burette-widget{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -526,11 +593,13 @@
     padding: 18px !important;
 }
 
-:is(.lab-shell-root, .exp1-root) .digital-block {
+.lab-shell-root .digital-block,
+.exp1-root .digital-block{
     flex: 1;
 }
 
-:is(.lab-shell-root, .exp1-root) .sub-label {
+.lab-shell-root .sub-label,
+.exp1-root .sub-label{
     display: block;
     font-family: var(--font-mono, monospace);
     font-size: 10.5px;
@@ -540,7 +609,8 @@
     margin-bottom: 6px !important;
 }
 
-:is(.lab-shell-root, .exp1-root) .readout-value {
+.lab-shell-root .readout-value,
+.exp1-root .readout-value{
     font-family: var(--font-mono, monospace);
     font-size: 34px;
     font-weight: 600;
@@ -549,13 +619,15 @@
     margin-bottom: 14px !important;
 }
 
-:is(.lab-shell-root, .exp1-root) .readout-value small {
+.lab-shell-root .readout-value small,
+.exp1-root .readout-value small{
     font-size: 14px;
     font-weight: 500;
     color: var(--lab-ink-muted);
 }
 
-:is(.lab-shell-root, .exp1-root) .flask-summary {
+.lab-shell-root .flask-summary,
+.exp1-root .flask-summary{
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -565,13 +637,15 @@
     color: var(--lab-ink-secondary);
 }
 
-:is(.lab-shell-root, .exp1-root) .flask-summary strong {
+.lab-shell-root .flask-summary strong,
+.exp1-root .flask-summary strong{
     font-family: var(--font-mono, monospace);
     color: var(--lab-ink);
 }
 
 /* Optical Meniscus Zoom Loupe */
-:is(.lab-shell-root, .exp1-root) .meniscus-loupe {
+.lab-shell-root .meniscus-loupe,
+.exp1-root .meniscus-loupe{
     width: 100px;
     background: #ffffff;
     border: 1.5px solid #475569;
@@ -582,7 +656,8 @@
     flex-shrink: 0;
 }
 
-:is(.lab-shell-root, .exp1-root) .loupe-label {
+.lab-shell-root .loupe-label,
+.exp1-root .loupe-label{
     font-family: var(--font-mono, monospace);
     font-size: 9px;
     font-weight: 700;
@@ -591,7 +666,8 @@
     margin-bottom: 5px !important;
 }
 
-:is(.lab-shell-root, .exp1-root) .loupe-tube {
+.lab-shell-root .loupe-tube,
+.exp1-root .loupe-tube{
     position: relative;
     height: 86px;
     background: linear-gradient(90deg, #e2e8f0 0%, #ffffff 50%, #cbd5e1 100%);
@@ -601,7 +677,8 @@
     overflow: hidden;
 }
 
-:is(.lab-shell-root, .exp1-root) .loupe-ticks {
+.lab-shell-root .loupe-ticks,
+.exp1-root .loupe-ticks{
     position: absolute;
     inset: 0;
     display: flex;
@@ -616,13 +693,15 @@
     text-align: left;
 }
 
-:is(.lab-shell-root, .exp1-root) .loupe-ticks span {
+.lab-shell-root .loupe-ticks span,
+.exp1-root .loupe-ticks span{
     border-bottom: 1px solid rgba(15, 23, 42, 0.25);
     width: 100%;
     padding-left: 2px !important;
 }
 
-:is(.lab-shell-root, .exp1-root) .loupe-water {
+.lab-shell-root .loupe-water,
+.exp1-root .loupe-water{
     position: absolute;
     bottom: 0;
     left: 0;
@@ -632,7 +711,8 @@
     z-index: 1;
 }
 
-:is(.lab-shell-root, .exp1-root) .meniscus-curve {
+.lab-shell-root .meniscus-curve,
+.exp1-root .meniscus-curve{
     position: absolute;
     top: -7px;
     left: -4px;
@@ -643,7 +723,8 @@
     border-bottom: 2.5px solid #0284c7;
 }
 
-:is(.lab-shell-root, .exp1-root) .loupe-redline {
+.lab-shell-root .loupe-redline,
+.exp1-root .loupe-redline{
     position: absolute;
     top: 50%;
     left: 0;
@@ -653,14 +734,16 @@
 }
 
 /* TAB 2: Procedure Checklist */
-:is(.lab-shell-root, .exp1-root) .step-list {
+.lab-shell-root .step-list,
+.exp1-root .step-list{
     list-style: none;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-:is(.lab-shell-root, .exp1-root) .step-list li {
+.lab-shell-root .step-list li,
+.exp1-root .step-list li{
     font-size: 13px;
     color: var(--lab-ink-secondary);
     padding: 11px 14px !important;
@@ -670,19 +753,22 @@
     transition: all 0.15s ease;
 }
 
-:is(.lab-shell-root, .exp1-root) .step-list li.done {
+.lab-shell-root .step-list li.done,
+.exp1-root .step-list li.done{
     color: #065f46;
     background: #ecfdf5;
     border-color: #a7f3d0;
     font-weight: 500;
 }
 
-:is(.lab-shell-root, .exp1-root) .step-list li.done::before {
-    content: '✓ ';
+.lab-shell-root .step-list li.done::before,
+.exp1-root .step-list li.done::before{
+    content: 'âœ“ ';
     font-weight: 700;
 }
 
-:is(.lab-shell-root, .exp1-root) .step-list li.active {
+.lab-shell-root .step-list li.active,
+.exp1-root .step-list li.active{
     background: var(--lab-accent-light);
     color: var(--lab-accent);
     font-weight: 600;
@@ -690,13 +776,15 @@
 }
 
 /* TAB 3: Camera Presets & Mouse Controls */
-:is(.lab-shell-root, .exp1-root) .cam-preset-grid {
+.lab-shell-root .cam-preset-grid,
+.exp1-root .cam-preset-grid{
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-cam {
+.lab-shell-root .btn-cam,
+.exp1-root .btn-cam{
     text-align: left;
     padding: 11px 14px !important;
     background: var(--lab-paper);
@@ -709,18 +797,21 @@
     transition: all 0.15s ease;
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-cam:hover {
+.lab-shell-root .btn-cam:hover,
+.exp1-root .btn-cam:hover{
     background: var(--lab-subtle);
     border-color: var(--lab-border-strong);
 }
 
-:is(.lab-shell-root, .exp1-root) .btn-cam.active {
+.lab-shell-root .btn-cam.active,
+.exp1-root .btn-cam.active{
     background: var(--lab-accent);
     color: #ffffff;
     border-color: var(--lab-accent);
 }
 
-:is(.lab-shell-root, .exp1-root) .hint-list {
+.lab-shell-root .hint-list,
+.exp1-root .hint-list{
     background: var(--lab-paper);
     border: 1px solid var(--lab-border);
     border-radius: 6px;
@@ -730,7 +821,8 @@
     gap: 9px;
 }
 
-:is(.lab-shell-root, .exp1-root) .hint-row {
+.lab-shell-root .hint-row,
+.exp1-root .hint-row{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -738,7 +830,7 @@
     color: var(--lab-ink-secondary);
 }
 
-:is(.lab-shell-root, .exp1-root) kbd {
+.exp1-root kbd {
     font-family: var(--font-mono, monospace);
     font-size: 11px;
     background: #ffffff;
@@ -750,6 +842,7 @@
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
 }
 
-:is(.lab-shell-root, .exp1-root) .hidden {
+.lab-shell-root .hidden,
+.exp1-root .hidden{
     display: none !important;
 }

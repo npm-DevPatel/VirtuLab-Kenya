@@ -1,14 +1,15 @@
-/**
- * phys-2 — Optics: Convex Lenses (Focal Length)
- * Experiment effects: placeholder for animations and particle effects.
+﻿/**
+ * PHYS-2: Focal Length of a Convex Lens
+ * Starter FX module. Add animations and particle effects here.
  */
-
 export class ExperimentFx {
-    constructor(/* labScene */) {
-        // TODO: initialize experiment-specific effects
+    constructor(labScene) {
+        this.labScene = labScene;
     }
 
     update() {
-        // TODO: per-frame animation updates
+        // TODO: Add experiment-specific visual effects
     }
+
+    cleanup() {}
 }

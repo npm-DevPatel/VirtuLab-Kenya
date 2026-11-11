@@ -141,3 +141,6 @@ export class TitrationState {
         };
     }
 }
+
+// Universal alias so LabShell can import ExperimentState from any experiment folder
+export { TitrationState as ExperimentState };

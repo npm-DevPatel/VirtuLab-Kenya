@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export class ExperimentFx {
+export class DropletFx {
     constructor(labScene) {
         this.scene = labScene.scene;
         this.flaskGroup = labScene.flaskGroup;
@@ -46,6 +46,7 @@ export class ExperimentFx {
         this.streamTimer = 0;
     }
 
+    // Step 1 Choreography: Lift Pipette from Beaker -> Move to Flask -> Drain 25 cm³ NaOH -> Return
     playPipetteTransfer(onComplete) {
         if (this.activeChoreography) return;
         this.pipetteLiquid.visible = true;
@@ -59,6 +60,7 @@ export class ExperimentFx {
         };
     }
 
+    // Step 2 Choreography: Lift Dropper from Amber Bottle -> Move to Flask -> Squeeze 3 Pink Drops -> Return
     playIndicatorDropper(onComplete) {
         if (this.activeChoreography) return;
 
@@ -81,7 +83,7 @@ export class ExperimentFx {
         for (let i = 0; i < count; i++) {
             const mesh = new THREE.Mesh(this.dropGeo, mat);
             mesh.position.set(startPos.x, startPos.y - i * 0.065, startPos.z);
-            mesh.scale.set(0.85, 1.35, 0.85);
+            mesh.scale.set(0.85, 1.35, 0.85); // Teardrop elongation
             this.scene.add(mesh);
             this.drops.push({
                 mesh,
@@ -126,6 +128,7 @@ export class ExperimentFx {
     }
 
     update() {
+        // 1. Update Active Equipment Choreography (Pipette or Indicator Dropper)
         if (this.activeChoreography) {
             const c = this.activeChoreography;
             c.frame++;
@@ -133,9 +136,11 @@ export class ExperimentFx {
 
             if (c.type === 'pipette') {
                 if (t < 0.25) {
+                    // Lift up out of beaker
                     const p = t / 0.25;
                     this.pipetteGroup.position.set(-0.62, 0.82 + p * 0.42, 0.22);
                 } else if (t < 0.5) {
+                    // Move horizontally over conical flask neck
                     const p = (t - 0.25) / 0.25;
                     this.pipetteGroup.position.set(
                         -0.62 + p * 0.62,
@@ -143,12 +148,14 @@ export class ExperimentFx {
                         0.22 - p * 0.22
                     );
                 } else if (t < 0.82) {
+                    // Drain NaOH stream into flask
                     const p = (t - 0.5) / 0.32;
                     this.pipetteLiquid.scale.y = Math.max(0.01, 1 - p);
                     if (c.frame % 5 === 0) {
                         this.spawnDrop('alkali', 1, { x: 0, y: 0.92, z: 0 });
                     }
                 } else {
+                    // Return pipette to beaker
                     const p = (t - 0.82) / 0.18;
                     this.pipetteLiquid.visible = false;
                     this.pipetteGroup.position.set(
@@ -159,9 +166,11 @@ export class ExperimentFx {
                 }
             } else if (c.type === 'dropper') {
                 if (t < 0.25) {
+                    // Lift dropper out of amber bottle
                     const p = t / 0.25;
                     this.dropperGroup.position.set(0.52, 0.72 + p * 0.36, 0.16);
                 } else if (t < 0.5) {
+                    // Move over conical flask
                     const p = (t - 0.25) / 0.25;
                     this.dropperGroup.position.set(
                         0.52 - p * 0.52,
@@ -169,10 +178,12 @@ export class ExperimentFx {
                         0.16 - p * 0.16
                     );
                 } else if (t < 0.8) {
+                    // Dispense 3 vibrant magenta drops
                     if (c.frame === 55 || c.frame === 66 || c.frame === 77) {
                         this.spawnDrop('indicator', 1, { x: 0, y: 0.92, z: 0 });
                     }
                 } else {
+                    // Return dropper to amber bottle
                     const p = (t - 0.8) / 0.2;
                     this.dropperGroup.position.set(
                         0 + p * 0.52,
@@ -189,6 +200,7 @@ export class ExperimentFx {
             }
         }
 
+        // 2. Update Falling Drops & Trigger Splash Ripple on Impact
         for (let i = this.drops.length - 1; i >= 0; i--) {
             const d = this.drops[i];
             d.mesh.position.y -= d.speed;
@@ -199,6 +211,7 @@ export class ExperimentFx {
             }
         }
 
+        // 3. Update Expanding Liquid Surface Ripples
         for (let i = this.ripples.length - 1; i >= 0; i--) {
             const r = this.ripples[i];
             r.scale += 0.35;
@@ -212,6 +225,7 @@ export class ExperimentFx {
             }
         }
 
+        // 4. Stream Beam & Stopcock Valve Timer
         if (this.streamTimer > 0) {
             this.streamTimer--;
             if (this.streamTimer === 0) {
@@ -226,6 +240,7 @@ export class ExperimentFx {
             }
         }
 
+        // 5. Circular Conical Flask Swirl Animation
         if (this.isSwirling && this.flaskGroup) {
             this.swirlTimer--;
             const angle = (46 - this.swirlTimer) * 0.42;
@@ -244,5 +259,5 @@ export class ExperimentFx {
     }
 }
 
-/** Backward-compatible alias */
-export const DropletFx = ExperimentFx;
+// Universal alias so LabShell can import ExperimentFx from any experiment folder
+export { DropletFx as ExperimentFx };

@@ -17,9 +17,16 @@ const subjectSlug = {
   Biology:   'biology',
 };
 
-// Generate static params for all 12 experiments
+// Generate static params for all 12 experiments (both canonical ID and KCSE code)
 export async function generateStaticParams() {
-  return experiments.map((exp) => ({ id: exp.id }));
+  const params = [];
+  experiments.forEach((exp) => {
+    params.push({ id: exp.id });
+    if (exp.code && exp.code !== exp.id) {
+      params.push({ id: exp.code });
+    }
+  });
+  return params;
 }
 
 export async function generateMetadata({ params }) {

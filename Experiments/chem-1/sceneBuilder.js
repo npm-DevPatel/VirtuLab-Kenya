@@ -542,7 +542,7 @@ export function createLabScene(container) {
     }
     window.addEventListener('resize', handleResize);
 
-    function cleanup() {
+    function dispose() {
         window.removeEventListener('resize', handleResize);
         if (controls && controls.dispose) {
             controls.dispose();
@@ -570,6 +570,7 @@ export function createLabScene(container) {
         syncWithState,
         setCameraPreset,
         updateCamera,
-        cleanup,
+        dispose,
+        cleanup: dispose,
     };
 }
