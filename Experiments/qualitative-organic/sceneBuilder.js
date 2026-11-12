@@ -1,4 +1,4 @@
-﻿import * as THREE from 'three';
+import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { buildLabRoomAndBench } from '../shared/labEnvironment.js';
 
@@ -65,7 +65,7 @@ export function createLabScene(container) {
     const height = container.clientHeight || 640;
 
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.05, 50);
-    camera.position.set(0.0, 1.55, 1.85);
+    camera.position.set(0.0, 1.35, 2.05);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(width, height);
@@ -79,7 +79,7 @@ export function createLabScene(container) {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.07;
-    controls.target.set(0.0, 0.25, 0.02);
+    controls.target.set(0.0, 0.72, 0.02);
     controls.minDistance = 0.55;
     controls.maxDistance = 4.2;
     controls.maxPolarAngle = Math.PI * 0.485;
@@ -159,12 +159,12 @@ export function createLabScene(container) {
         new THREE.BoxGeometry(0.34, 0.012, 0.32),
         new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.75 })
     );
-    heatMat.position.set(burnerX, 0.056, burnerZ);
+    heatMat.position.set(burnerX, 0.506, burnerZ);
     heatMat.receiveShadow = true;
     scene.add(heatMat);
 
     const burnerGroup = new THREE.Group();
-    burnerGroup.position.set(burnerX, 0.062, burnerZ);
+    burnerGroup.position.set(burnerX, 0.512, burnerZ);
     scene.add(burnerGroup);
 
     // Heavy circular cast-iron base
@@ -255,11 +255,11 @@ export function createLabScene(container) {
         new THREE.BoxGeometry(0.04, 0.018, 0.05),
         new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.4 })
     );
-    spatulaRest.position.set(burnerX + 0.11, 0.07, burnerZ + 0.08);
+    spatulaRest.position.set(burnerX + 0.11, 0.52, burnerZ + 0.08);
     scene.add(spatulaRest);
 
     const spatulaGroup = new THREE.Group();
-    const spatulaHomePos = new THREE.Vector3(burnerX + 0.11, 0.086, burnerZ + 0.08);
+    const spatulaHomePos = new THREE.Vector3(burnerX + 0.11, 0.536, burnerZ + 0.08);
     spatulaGroup.position.copy(spatulaHomePos);
     scene.add(spatulaGroup);
 
@@ -324,7 +324,7 @@ export function createLabScene(container) {
     const rackX = 0.04;
     const rackZ = 0.0;
     const rackGroup = new THREE.Group();
-    rackGroup.position.set(rackX, 0.05, rackZ);
+    rackGroup.position.set(rackX, 0.50, rackZ);
     scene.add(rackGroup);
 
     // Base board
@@ -369,7 +369,7 @@ export function createLabScene(container) {
 
         // Individual Test Tube Group (allows swirling animation per tube!)
         const tubeGroup = new THREE.Group();
-        const homePos = new THREE.Vector3(rackX + localX, 0.075, rackZ);
+        const homePos = new THREE.Vector3(rackX + localX, 0.525, rackZ);
         tubeGroup.position.copy(homePos);
         scene.add(tubeGroup);
 
@@ -485,13 +485,13 @@ export function createLabScene(container) {
         new THREE.BoxGeometry(0.22, 0.012, 0.11),
         new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.25 })
     );
-    litmusTile.position.set(rackX, 0.056, 0.21);
+    litmusTile.position.set(rackX, 0.506, 0.21);
     litmusTile.receiveShadow = true;
     scene.add(litmusTile);
 
     function createLitmusStrip(initialHex, offsetX) {
         const stripGroup = new THREE.Group();
-        const homePos = new THREE.Vector3(rackX + offsetX, 0.065, 0.21);
+        const homePos = new THREE.Vector3(rackX + offsetX, 0.515, 0.21);
         stripGroup.position.copy(homePos);
         scene.add(stripGroup);
 
@@ -532,7 +532,7 @@ export function createLabScene(container) {
         isAmber = true,
     }) {
         const bottleGroup = new THREE.Group();
-        const homePos = new THREE.Vector3(x, 0.05, z);
+        const homePos = new THREE.Vector3(x, 0.50, z);
         bottleGroup.position.copy(homePos);
         scene.add(bottleGroup);
 
@@ -588,7 +588,7 @@ export function createLabScene(container) {
 
         if (hasDropper) {
             dropperGroup = new THREE.Group();
-            dropperHomePos = new THREE.Vector3(x, 0.22, z);
+            dropperHomePos = new THREE.Vector3(x, 0.67, z);
             dropperGroup.position.copy(dropperHomePos);
             scene.add(dropperGroup);
 
@@ -664,7 +664,7 @@ export function createLabScene(container) {
 
     // 4. Solid NaHCO3 Wide-Mouth Jar + Micro-Spatula (X = 0.43, Z = 0.08)
     const nahco3JarGroup = new THREE.Group();
-    nahco3JarGroup.position.set(0.43, 0.05, 0.08);
+    nahco3JarGroup.position.set(0.43, 0.50, 0.08);
     scene.add(nahco3JarGroup);
 
     const jarGlass = new THREE.Mesh(
@@ -694,7 +694,7 @@ export function createLabScene(container) {
 
     // Dedicated Powder Transfer Spatula resting in/on the NaHCO3 jar
     const powderSpatulaGroup = new THREE.Group();
-    const powderSpatulaHomePos = new THREE.Vector3(0.43, 0.14, 0.08);
+    const powderSpatulaHomePos = new THREE.Vector3(0.43, 0.59, 0.08);
     powderSpatulaGroup.position.copy(powderSpatulaHomePos);
     powderSpatulaGroup.rotation.z = -0.35;
     scene.add(powderSpatulaGroup);
@@ -716,78 +716,75 @@ export function createLabScene(container) {
     // ============================================================================
     // 7. 3D FLOATING APPARATUS LABELS
     // ============================================================================
-    const labelAnchors = [
-        {
-            title: 'Bunsen Burner & Spatula',
-            sub: 'Ignition / Sootiness Test',
-            pos: new THREE.Vector3(burnerX, 0.38, burnerZ),
-        },
-        {
-            title: 'Liquid Z (Unknown)',
-            sub: 'Organic Sample',
-            pos: new THREE.Vector3(-0.22, 0.27, -0.21),
-        },
-        {
-            title: 'Portion A',
-            sub: '+ Bromine Water',
-            pos: new THREE.Vector3(rackX - 0.11, 0.36, rackZ),
-        },
-        {
-            title: 'Portion B',
-            sub: '+ Acidified KMnO₄',
-            pos: new THREE.Vector3(rackX, 0.36, rackZ),
-        },
-        {
-            title: 'Portion C',
-            sub: '+ Litmus & NaHCO₃',
-            pos: new THREE.Vector3(rackX + 0.11, 0.36, rackZ),
-        },
-        {
-            title: 'Moist Litmus Papers',
-            sub: 'Blue & Red Indicator',
-            pos: new THREE.Vector3(rackX, 0.12, 0.21),
-        },
-        {
-            title: 'Br₂(aq) & H⁺/KMnO₄',
-            sub: 'Unsaturation Reagents',
-            pos: new THREE.Vector3(0.43, 0.31, -0.18),
-        },
-        {
-            title: 'Solid NaHCO₃(s)',
-            sub: 'Carboxylic Acid Test',
-            pos: new THREE.Vector3(0.43, 0.22, 0.08),
-        },
-    ];
+  const labelAnchors = [
+    {
+      title: 'Bunsen Burner & Spatula',
+      sub: 'Ignition / Sootiness Test',
+      pos: new THREE.Vector3(burnerX, 0.85, burnerZ),
+    },
+    {
+      title: 'Liquid Z (Unknown)',
+      sub: 'Organic Sample',
+      pos: new THREE.Vector3(-0.22, 0.74, -0.21),
+    },
+    {
+      title: 'Portion A',
+      sub: '+ Bromine Water',
+      pos: new THREE.Vector3(rackX - 0.11, 0.83, rackZ),
+    },
+    {
+      title: 'Portion B',
+      sub: '+ Acidified KMnO₄',
+      pos: new THREE.Vector3(rackX, 0.83, rackZ),
+    },
+    {
+      title: 'Portion C',
+      sub: '+ Litmus & NaHCO₃',
+      pos: new THREE.Vector3(rackX + 0.11, 0.83, rackZ),
+    },
+    {
+      title: 'Moist Litmus Papers',
+      sub: 'Blue & Red Indicator',
+      pos: new THREE.Vector3(rackX, 0.58, 0.21),
+    },
+    {
+      title: 'Br₂(aq) & H⁺/KMnO₄',
+      sub: 'Unsaturation Reagents',
+      pos: new THREE.Vector3(0.43, 0.78, -0.18),
+    },
+    {
+      title: 'Solid NaHCO₃(s)',
+      sub: 'Carboxylic Acid Test',
+      pos: new THREE.Vector3(0.43, 0.69, 0.08),
+    },
+  ];
 
-    // ============================================================================
-    // 8. CAMERA PRESETS & STATE SYNC
-    // ============================================================================
-    const cameraPresets = {
-        bench: {
-            pos: new THREE.Vector3(0.0, 1.48, 1.78),
-            target: new THREE.Vector3(0.0, 0.22, 0.0),
-        },
-        burner: {
-            pos: new THREE.Vector3(-0.42, 0.72, 0.78),
-            target: new THREE.Vector3(-0.44, 0.22, 0.04),
-        },
-        rack: {
-            pos: new THREE.Vector3(0.04, 0.68, 0.82),
-            target: new THREE.Vector3(0.04, 0.19, 0.02),
-        },
-        tubeA: {
-            pos: new THREE.Vector3(-0.08, 0.56, 0.58),
-            target: new THREE.Vector3(rackX - 0.11, 0.18, 0.0),
-        },
-        tubeB: {
-            pos: new THREE.Vector3(0.04, 0.56, 0.58),
-            target: new THREE.Vector3(rackX, 0.18, 0.0),
-        },
-        tubeC: {
-            pos: new THREE.Vector3(0.16, 0.58, 0.62),
-            target: new THREE.Vector3(rackX + 0.11, 0.17, 0.06),
-        },
-    };
+  const cameraPresets = {
+    bench: {
+      pos: new THREE.Vector3(0.0, 1.35, 2.05),
+      target: new THREE.Vector3(0.0, 0.72, 0.0),
+    },
+    burner: {
+      pos: new THREE.Vector3(-0.42, 1.15, 0.82),
+      target: new THREE.Vector3(-0.44, 0.68, 0.04),
+    },
+    rack: {
+      pos: new THREE.Vector3(0.04, 1.12, 0.88),
+      target: new THREE.Vector3(0.04, 0.66, 0.02),
+    },
+    tubeA: {
+      pos: new THREE.Vector3(-0.08, 1.02, 0.62),
+      target: new THREE.Vector3(rackX - 0.11, 0.65, 0.0),
+    },
+    tubeB: {
+      pos: new THREE.Vector3(0.04, 1.02, 0.62),
+      target: new THREE.Vector3(rackX, 0.65, 0.0),
+    },
+    tubeC: {
+      pos: new THREE.Vector3(0.16, 1.04, 0.66),
+      target: new THREE.Vector3(rackX + 0.11, 0.64, 0.06),
+    },
+  };
 
     let targetCamPos = null;
     let targetLookAt = null;

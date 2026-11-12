@@ -1,4 +1,4 @@
-﻿import * as THREE from 'three';
+import * as THREE from 'three';
 
 export class ExperimentFx {
     constructor(labScene) {
@@ -140,11 +140,11 @@ export class ExperimentFx {
     playDivideSampleAnimation(onPortionFilled, onComplete) {
         const bottle = this.labScene.sampleZBottle.bottleGroup;
         const home = this.labScene.sampleZBottle.homePos;
-        const targets = [
-            { key: 'A', x: -0.07 - 0.06, y: 0.34, z: 0.0 },
-            { key: 'B', x: 0.04 - 0.06, y: 0.34, z: 0.0 },
-            { key: 'C', x: 0.15 - 0.06, y: 0.34, z: 0.0 },
-        ];
+    const targets = [
+      { key: 'A', x: -0.07 - 0.06, y: 0.79, z: 0.0 },
+      { key: 'B', x: 0.04 - 0.06, y: 0.79, z: 0.0 },
+      { key: 'C', x: 0.15 - 0.06, y: 0.79, z: 0.0 },
+    ];
 
         let idx = 0;
         const pourNextTube = () => {
@@ -180,7 +180,7 @@ export class ExperimentFx {
                 () => {
                     // Show pour stream briefly
                     const tubeWorldX = this.labScene.tubesMap[tgt.key].homePos.x;
-                    this.pourStreamMesh.position.set(tubeWorldX, 0.28, 0.0);
+                    this.pourStreamMesh.position.set(tubeWorldX, 0.73, 0.0);
                     this.pourStreamMesh.visible = true;
                     onPortionFilled?.(tgt.key);
 
@@ -247,7 +247,7 @@ export class ExperimentFx {
         const dropper = bottleObj.dropperGroup;
         const home = bottleObj.dropperHomePos;
         const tubePos = this.labScene.tubesMap[tubeKey].homePos;
-        const overTubePos = new THREE.Vector3(tubePos.x, 0.42, tubePos.z);
+        const overTubePos = new THREE.Vector3(tubePos.x, 0.87, tubePos.z);
 
         // 1. Lift dropper out of bottle and travel over target test tube
         this.tween(
@@ -262,11 +262,11 @@ export class ExperimentFx {
                 let dropsDone = 0;
                 const dropTimer = setInterval(() => {
                     dropsDone++;
-                    this.spawnDroplet(
-                        new THREE.Vector3(tubePos.x, 0.29, tubePos.z),
-                        dropletHex,
-                        0.14
-                    );
+          this.spawnDroplet(
+            new THREE.Vector3(tubePos.x, 0.74, tubePos.z),
+            dropletHex,
+            0.59
+          );
                     onDropImpact?.(dropsDone);
 
                     if (dropsDone >= 3) {
@@ -316,7 +316,7 @@ export class ExperimentFx {
         const blueStrip = this.labScene.blueLitmus.group;
         const blueHome = this.labScene.blueLitmus.homePos;
         const tubeCPos = this.labScene.tubesMap.C.homePos;
-        const dipPos = new THREE.Vector3(tubeCPos.x, 0.26, tubeCPos.z);
+        const dipPos = new THREE.Vector3(tubeCPos.x, 0.71, tubeCPos.z);
 
         // 1. Lift moist Blue Litmus strip and dip tip into Tube C
         this.tween(
@@ -343,7 +343,7 @@ export class ExperimentFx {
                             // 2. Move NaHCO3 powder micro-spatula over Tube C and tip solid in
                             const pSpatula = this.labScene.powderSpatulaGroup;
                             const pHome = this.labScene.powderSpatulaHomePos;
-                            const overTubeC = new THREE.Vector3(tubeCPos.x + 0.05, 0.34, tubeCPos.z);
+                            const overTubeC = new THREE.Vector3(tubeCPos.x + 0.05, 0.79, tubeCPos.z);
 
                             this.tween(
                                 540,
@@ -355,15 +355,15 @@ export class ExperimentFx {
                                 () => {
                                     // Spawn falling white NaHCO3 grains + start CO2 effervescence
                                     for (let i = 0; i < 4; i++) {
-                                        this.spawnDroplet(
-                                            new THREE.Vector3(
-                                                tubeCPos.x + (Math.random() - 0.5) * 0.01,
-                                                0.31 + i * 0.012,
-                                                tubeCPos.z
-                                            ),
-                                            0xffffff,
-                                            0.14
-                                        );
+                    this.spawnDroplet(
+                      new THREE.Vector3(
+                        tubeCPos.x + (Math.random() - 0.5) * 0.01,
+                        0.76 + i * 0.012,
+                        tubeCPos.z
+                      ),
+                      0xffffff,
+                      0.59
+                    );
                                     }
 
                                     onPowderAdded?.();
